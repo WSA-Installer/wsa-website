@@ -1,3 +1,5 @@
+import config from "@/config.json";
+
 export type MonetizationProvider = "carbon" | "ethicalads" | "buysellads" | "none";
 
 export interface AdPlacement {
@@ -10,6 +12,7 @@ export interface AdPlacement {
 export interface MonetizationConfig {
   provider: MonetizationProvider;
   providerId: string;
+  carbonId?: string;
   buyMeACoffee: {
     enabled: boolean;
     url: string;
@@ -31,30 +34,12 @@ export interface MonetizationConfig {
 }
 
 export const MONETIZATION: MonetizationConfig = {
-  provider: "none",
-  providerId: "",
-  buyMeACoffee: {
-    enabled: true,
-    url: "https://buymeacoffee.com/mrcyberdev",
-    username: "mrcyberdev",
-  },
-  gitHubSponsors: {
-    enabled: false,
-    url: "",
-  },
-  koFi: {
-    enabled: false,
-    url: "",
-  },
-  adPlacements: [
-    { slot: "after-features", location: "Between Features and HowItWorks", format: "native", enabled: false },
-    { slot: "after-how-it-works", location: "Between HowItWorks and Gallery", format: "native", enabled: false },
-    { slot: "after-faq", location: "After FAQ section", format: "banner", enabled: false },
-    { slot: "sidebar-docs", location: "Sidebar on documentation", format: "sidebar", enabled: false },
-    { slot: "footer", location: "Footer area", format: "banner", enabled: false },
-  ],
-  affiliateLinks: {
-    enabled: false,
-    links: [],
-  },
+  provider: config.monetization.provider as MonetizationProvider,
+  providerId: config.monetization.carbonId || "",
+  carbonId: config.monetization.carbonId,
+  buyMeACoffee: config.monetization.buyMeACoffee,
+  gitHubSponsors: config.monetization.gitHubSponsors,
+  koFi: config.monetization.koFi,
+  adPlacements: config.monetization.adPlacements as AdPlacement[],
+  affiliateLinks: config.monetization.affiliateLinks,
 };

@@ -2,7 +2,8 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { CONTENT, MONETIZATION } from "@/lib/config";
+import { CONTENT } from "@/lib/config";
+import { AdSlot } from "@/components/ui/AdSlot";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import {
   Download, Shield, Search, HardDrive, Store, CheckCircle2,
@@ -99,9 +100,7 @@ export default function HowItWorks() {
         </div>
       </div>
 
-      {MONETIZATION.adPlacements.find(a => a.slot === "after-how-it-works")?.enabled && (
-        <div className="mx-auto mt-12 max-w-7xl px-4" id="ad-after-how-it-works" />
-      )}
+      <AdSlot slot="after-how-it-works" />
     </section>
   );
 }

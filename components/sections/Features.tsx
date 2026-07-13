@@ -1,8 +1,9 @@
 "use client";
 
-import { CONTENT, MONETIZATION } from "@/lib/config";
+import { CONTENT } from "@/lib/config";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import TiltCard from "@/components/ui/TiltCard";
+import { AdSlot } from "@/components/ui/AdSlot";
 import {
   Cpu, Settings2, Zap, Store, Download as DownloadIcon,
   Wrench, Activity, RefreshCw, FolderOpen, Shield, Package, Terminal,
@@ -65,9 +66,7 @@ export default function Features() {
         </div>
       </div>
 
-      {MONETIZATION.adPlacements.find(a => a.slot === "after-features")?.enabled && (
-        <div className="mx-auto mt-12 max-w-7xl px-4" id="ad-after-features" />
-      )}
+      <AdSlot slot="after-features" />
     </section>
   );
 }

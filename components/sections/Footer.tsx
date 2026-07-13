@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { SITE, CONTENT, MONETIZATION } from "@/lib/config";
+import { AdSlot } from "@/components/ui/AdSlot";
 import { Play, Code2, Coffee, Heart } from "lucide-react";
 
 export default function Footer() {
@@ -114,11 +115,7 @@ export default function Footer() {
         </div>
       </div>
 
-      {MONETIZATION.adPlacements.find(a => a.slot === "footer")?.enabled && (
-        <div className="border-t border-border py-4">
-          <div className="mx-auto max-w-7xl px-4 text-center" id="ad-footer" />
-        </div>
-      )}
+      <AdSlot slot="footer" />
     </footer>
   );
 }

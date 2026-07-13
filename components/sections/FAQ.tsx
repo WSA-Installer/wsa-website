@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CONTENT, MONETIZATION, SITE } from "@/lib/config";
+import { CONTENT, SITE } from "@/lib/config";
+import { AdSlot } from "@/components/ui/AdSlot";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { ChevronDown } from "lucide-react";
 
@@ -108,9 +109,7 @@ export default function FAQSection() {
         </ScrollReveal>
       </div>
 
-      {MONETIZATION.adPlacements.find(a => a.slot === "after-faq")?.enabled && (
-        <div className="mx-auto mt-12 max-w-7xl px-4" id="ad-after-faq" />
-      )}
+      <AdSlot slot="after-faq" />
     </section>
   );
 }
