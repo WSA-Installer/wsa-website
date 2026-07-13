@@ -1,6 +1,6 @@
 import AnimatedGradient from "@/components/ui/AnimatedGradient";
 import ParticleField from "@/components/three/ParticleField";
-import FloatingShapes from "@/components/three/FloatingShapes";
+import Main3DCanvasWrapper from "@/components/three/Main3DCanvasWrapper";
 import Hero from "@/components/sections/Hero";
 import Features from "@/components/sections/Features";
 import HowItWorks from "@/components/sections/HowItWorks";
@@ -17,7 +17,7 @@ export default function Home() {
     <>
       <AnimatedGradient />
       <ParticleField />
-      <FloatingShapes />
+      <Main3DCanvasWrapper />
       <Hero />
       <Features />
       <HowItWorks />

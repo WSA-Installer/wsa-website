@@ -13,6 +13,7 @@ function Shape({ position, scale, color, speed, distort }: {
   distort: number;
 }) {
   const mesh = useRef<THREE.Mesh>(null!);
+  // eslint-disable-next-line react-hooks/purity
   const randomOffset = useMemo(() => Math.random() * Math.PI * 2, []);
 
   useFrame((state) => {

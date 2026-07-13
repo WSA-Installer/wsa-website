@@ -36,19 +36,20 @@ export default function Hero() {
     if (!isDeleting && displayText === words[wordIndex]) {
       setTimeout(() => setIsDeleting(true), 2000);
     } else if (isDeleting && displayText === "") {
-      setIsDeleting(false);
-      setWordIndex((prev) => (prev + 1) % words.length);
+      setTimeout(() => {
+        setIsDeleting(false);
+        setWordIndex((prev) => (prev + 1) % words.length);
+      }, 0);
     }
   }, [displayText, isDeleting, wordIndex]);
 
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 pb-20 pt-24">
+    <section className="relative flex min-h-screen flex-col items-start justify-center overflow-hidden px-4 pb-20 pt-24 md:pl-16 lg:pl-24">
       <div className="pointer-events-none absolute inset-0 z-0">
         <div className="absolute top-1/4 left-1/4 h-96 w-96 animate-gradient rounded-full opacity-[0.08] blur-[150px]" style={{ background: "radial-gradient(circle, #0078d4 0%, transparent 70%)" }} />
-        <div className="absolute bottom-1/4 right-1/4 h-80 w-80 animate-gradient rounded-full opacity-[0.06] blur-[130px]" style={{ background: "radial-gradient(circle, #00bcd4 0%, transparent 70%)" }} />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-4xl text-center">
+      <div className="relative z-10 w-full md:max-w-[50%] text-left">
         <ScrollReveal delay={0.1}>
           <div className="mb-6 inline-flex items-center gap-2 rounded-full glass px-4 py-1.5">
             <span className="h-2 w-2 rounded-full bg-success animate-pulse" />
@@ -59,7 +60,7 @@ export default function Hero() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.2}>
-          <h1 className="text-5xl font-bold leading-tight tracking-tight sm:text-6xl lg:text-7xl">
+          <h1 className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl text-left">
             <span className="text-gradient">{SITE.name}</span>
             <br />
             <span className="text-text-primary">
@@ -70,13 +71,13 @@ export default function Hero() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.3}>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-text-secondary">
+          <p className="mt-6 text-base leading-relaxed text-text-secondary">
             {SITE.description}
           </p>
         </ScrollReveal>
 
         <ScrollReveal delay={0.4}>
-          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+          <div className="mt-10 flex flex-col items-stretch gap-4 sm:flex-row sm:justify-start">
             <MagneticButton>
               <Button variant="primary" size="lg" href={downloads.installer.url} download>
                 <Download className="h-5 w-5" />
@@ -93,7 +94,7 @@ export default function Hero() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.5}>
-          <div className="mt-6 flex items-center justify-center gap-6 text-xs text-text-tertiary">
+          <div className="mt-6 flex items-center justify-start gap-6 text-xs text-text-tertiary">
             {SITE.badges.map((badge, i) => (
               <span key={badge} className="flex items-center gap-1.5">
                 {i === 0 && <Star className="h-3 w-3" />}
@@ -104,7 +105,7 @@ export default function Hero() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.6}>
-          <div className="mt-16 flex items-center justify-center gap-8">
+          <div className="mt-16 flex items-center justify-start gap-8">
             <a href={SITE.manualGuideUrl} target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center gap-1.5">
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl glass transition-all duration-300 group-hover:glass-hover group-hover:scale-105">
                 <Play className="h-6 w-6 text-red-500" />
@@ -131,7 +132,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 md:left-1/4 -translate-x-1/2"
       >
         <motion.div
           animate={{ y: [0, 8, 0] }}

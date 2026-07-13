@@ -4,30 +4,32 @@ import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
+function generatePositions(count: number) {
+  const pos = new Float32Array(count * 3);
+  for (let i = 0; i < count; i++) {
+    pos[i * 3] = (Math.random() - 0.5) * 30;
+    pos[i * 3 + 1] = (Math.random() - 0.5) * 30;
+    pos[i * 3 + 2] = (Math.random() - 0.5) * 30;
+  }
+  return pos;
+}
+
+function generateColors(count: number) {
+  const c = new Float32Array(count * 3);
+  for (let i = 0; i < count; i++) {
+    const t = Math.random();
+    c[i * 3] = 0 + t * 0.47;
+    c[i * 3 + 1] = 0.47 + t * 0.27;
+    c[i * 3 + 2] = 0.83 + t * 0.08;
+  }
+  return c;
+}
+
 function Particles({ count = 2000 }: { count?: number }) {
   const mesh = useRef<THREE.Points>(null!);
-  const mouse = useRef({ x: 0, y: 0 });
 
-  const positions = useMemo(() => {
-    const pos = new Float32Array(count * 3);
-    for (let i = 0; i < count; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 30;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 30;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 30;
-    }
-    return pos;
-  }, [count]);
-
-  const colors = useMemo(() => {
-    const c = new Float32Array(count * 3);
-    for (let i = 0; i < count; i++) {
-      const t = Math.random();
-      c[i * 3] = 0 + t * 0.47;
-      c[i * 3 + 1] = 0.47 + t * 0.27;
-      c[i * 3 + 2] = 0.83 + t * 0.08;
-    }
-    return c;
-  }, [count]);
+  const positions = useMemo(() => generatePositions(count), [count]);
+  const colors = useMemo(() => generateColors(count), [count]);
 
   useFrame((state) => {
     if (!mesh.current) return;

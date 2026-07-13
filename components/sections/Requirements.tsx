@@ -6,23 +6,25 @@ import { CheckCircle2 } from "lucide-react";
 
 export default function Requirements() {
   return (
-    <section id="requirements" className="relative border-t border-border py-24">
+    <section id="requirements" className="relative border-t border-border py-24 md:pl-16 lg:pl-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <ScrollReveal>
-          <div className="text-center">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full glass px-4 py-1.5">
-              <span className="text-xs text-text-secondary">What you need</span>
+        <div className="w-full md:max-w-[50%] text-left">
+          <ScrollReveal>
+            <div>
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full glass px-4 py-1.5">
+                <span className="text-xs text-text-secondary">What you need</span>
+              </div>
+              <h2 className="text-3xl font-bold sm:text-4xl">
+                <span className="text-gradient">System Requirements</span>
+              </h2>
+              <p className="mt-4 text-text-secondary">
+                WSA Installer works on most modern Windows PCs. Check the requirements below.
+              </p>
             </div>
-            <h2 className="text-3xl font-bold sm:text-4xl">
-              <span className="text-gradient">System Requirements</span>
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-text-secondary">
-              WSA Installer works on most modern Windows PCs. Check the requirements below.
-            </p>
-          </div>
-        </ScrollReveal>
+          </ScrollReveal>
+        </div>
 
-        <div className="mt-16 grid gap-8 lg:grid-cols-2">
+        <div className="mt-16 w-full md:max-w-[50%] grid gap-8 grid-cols-1">
           <ScrollReveal delay={0.1}>
             <div className="rounded-2xl glass p-8">
               <h3 className="text-lg font-semibold text-text-primary">Minimum & Recommended</h3>

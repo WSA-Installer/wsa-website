@@ -11,23 +11,25 @@ import ScrollReveal from "@/components/ui/ScrollReveal";
 export default function DownloadSection() {
   const downloads = useDownloadUrls();
   return (
-    <section id="download" className="relative border-t border-border py-24">
+    <section id="download" className="relative border-t border-border py-24 md:pl-16 lg:pl-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <ScrollReveal>
-          <div className="text-center">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full glass px-4 py-1.5">
-              <span className="text-xs text-text-secondary">Get started now</span>
+        <div className="w-full md:max-w-[50%] text-left">
+          <ScrollReveal>
+            <div>
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full glass px-4 py-1.5">
+                <span className="text-xs text-text-secondary">Get started now</span>
+              </div>
+              <h2 className="text-3xl font-bold sm:text-4xl">
+                <span className="text-gradient">Download {SITE.name}</span>
+              </h2>
+              <p className="mt-4 text-text-secondary">
+                Choose the installation method that works best for you.
+              </p>
             </div>
-            <h2 className="text-3xl font-bold sm:text-4xl">
-              <span className="text-gradient">Download {SITE.name}</span>
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-text-secondary">
-              Choose the installation method that works best for you.
-            </p>
-          </div>
-        </ScrollReveal>
+          </ScrollReveal>
+        </div>
 
-        <div className="mt-16 grid gap-8 lg:grid-cols-2">
+        <div className="mt-16 w-full md:max-w-[50%] grid gap-8 grid-cols-1">
           <ScrollReveal delay={0.1} direction="left">
             <motion.div
               whileHover={{ y: -4 }}
@@ -69,7 +71,7 @@ export default function DownloadSection() {
             </motion.div>
           </ScrollReveal>
 
-          <ScrollReveal delay={0.2} direction="right">
+          <ScrollReveal delay={0.2} direction="left">
             <motion.div
               whileHover={{ y: -4 }}
               className="group relative overflow-hidden rounded-2xl glass p-8 transition-all duration-300 hover:glass-hover"
@@ -114,8 +116,8 @@ export default function DownloadSection() {
         </div>
 
         <ScrollReveal delay={0.3}>
-          <div className="mt-12 rounded-2xl glass p-6">
-            <div className="flex flex-col items-center gap-4 text-center sm:flex-row">
+          <div className="mt-12 w-full md:max-w-[50%] rounded-2xl glass p-6">
+            <div className="flex flex-col items-center gap-4 text-left sm:flex-row">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-warning/10">
                 <Terminal className="h-6 w-6 text-warning" />
               </div>
