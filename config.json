@@ -31,7 +31,7 @@
     "installer": {
       "label": "WSA_Installer_Setup.exe",
       "size": "228 MB",
-      "url": "https://github.com/gshellmr-code/ads-json-data/releases/download/bundle-1.0/WSA_Installer_Setup.exe"
+      "url": "https://github.com/WSA-Installer/wsa-installer/releases/download/WSA-V1.2/WSA_Installer_Setup.exe"
     },
     "bundle": {
       "label": "bundle.wsa",
