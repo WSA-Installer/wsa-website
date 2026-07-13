@@ -3,32 +3,62 @@
 import { useEffect, useRef } from "react";
 import { MONETIZATION } from "@/lib/config";
 
-export function CarbonAd() {
+export function GoogleAdSense() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current || MONETIZATION.provider !== "carbon") return;
+    if (!containerRef.current || MONETIZATION.provider !== "adsense") return;
 
-    const script = document.createElement("script");
-    script.src = `https://cdn.carbonads.com/carbon.js?serve=${MONETIZATION.carbonId}&placement=wsainstaller`;
-    script.async = true;
-    script.id = "_carbonads_js";
-    containerRef.current.innerHTML = "";
-    containerRef.current.appendChild(script);
-
-    return () => {
-      const existing = document.getElementById("_carbonads_js");
-      if (existing) existing.remove();
-    };
+    if (!document.querySelector("script[src*='adsbygoogle']")) {
+      const script = document.createElement("script");
+      script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-${MONETIZATION.adSensePublisherId}`;
+      script.async = true;
+      script.crossOrigin = "anonymous";
+      document.head.appendChild(script);
+    }
   }, []);
 
-  if (MONETIZATION.provider !== "carbon") return null;
+  if (MONETIZATION.provider !== "adsense") return null;
+
+  return <div ref={containerRef} />;
+}
+
+interface AdSenseAdProps {
+  slot: string;
+  format?: "auto" | "rectangle" | "horizontal" | "vertical";
+  className?: string;
+}
+
+export function AdSenseAd({ slot, format = "auto", className = "" }: AdSenseAdProps) {
+  const insRef = useRef<HTMLModElement>(null);
+
+  useEffect(() => {
+    try {
+      if (insRef.current && MONETIZATION.provider === "adsense") {
+        const { adsbygoogle } = window as unknown as { adsbygoogle?: unknown[] };
+        if (adsbygoogle) {
+          adsbygoogle.push({});
+        }
+      }
+    } catch {
+      // silent fail
+    }
+  }, []);
+
+  if (MONETIZATION.provider !== "adsense") return null;
 
   return (
-    <div
-      ref={containerRef}
-      className="carbon-ad flex min-h-[100px] items-center justify-center"
-    />
+    <div className={`flex justify-center ${className}`}>
+      <ins
+        ref={insRef}
+        className="adsbygoogle"
+        style={{ display: "block" }}
+        data-ad-client={`ca-${MONETIZATION.adSensePublisherId}`}
+        data-ad-slot={slot}
+        data-ad-format={format}
+        data-full-width-responsive="true"
+      />
+    </div>
   );
 }
 
@@ -50,21 +80,8 @@ export function AdSlot({ slot, className = "" }: AdSlotProps) {
         <span className="text-[10px] uppercase tracking-widest text-text-tertiary">
           — Sponsored —
         </span>
-        <CarbonAd />
-        {MONETIZATION.affiliateLinks.enabled && MONETIZATION.affiliateLinks.links.length > 0 && (
-          <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
-            {MONETIZATION.affiliateLinks.links.map((link) => (
-              <a
-                key={link.name}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer sponsored"
-                className="rounded-lg bg-primary/5 px-3 py-1.5 text-xs text-text-secondary transition-colors hover:bg-primary/10 hover:text-text-primary"
-              >
-                {link.description} →
-              </a>
-            ))}
-          </div>
+        {MONETIZATION.provider === "adsense" && (
+          <AdSenseAd slot={slot} format="auto" />
         )}
       </div>
     </div>

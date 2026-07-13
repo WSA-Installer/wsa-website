@@ -149,8 +149,8 @@
     "installKeywords": ["how to install WSA on Windows 10", "how to install WSA on Windows 11", "WSA install guide 2026", "one click WSA installer", "WSA automatic setup tool", "WSA bundle download offline"]
   },
   "monetization": {
-    "provider": "carbon",
-    "carbonId": "CESI627N",
+    "provider": "adsense",
+    "adSensePublisherId": "pub-0000000000000000",
     "buyMeACoffee": {
       "enabled": true,
       "url": "https://buymeacoffee.com/mrcyberdev",
@@ -178,5 +178,16 @@
         { "name": "DigitalOcean", "url": "https://digitalocean.com/", "description": "Cloud hosting for WSA development" }
       ]
     }
+  },
+  "pipVideo": {
+    "enabled": true,
+    "videoUrl": "https://youtu.be/VrVzpEJgtqY",
+    "embedUrl": "https://www.youtube-nocookie.com/embed/VrVzpEJgtqY",
+    "thumbnailUrl": "https://i.makeagif.com/media/5-01-2026/JCEQKy.gif",
+    "title": "Launch Your Website Professionally with High-Performance Hosting",
+    "description": "From setup to scaling — a complete workflow for beginners and advanced users.",
+    "ctaText": "Start your online journey with a high-performance hosting solution optimized for speed and scalability.",
+    "ctaButton": "Get Started Now",
+    "ctaUrl": "https://www.hostinger.com/"
   }
 }

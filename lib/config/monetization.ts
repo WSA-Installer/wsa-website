@@ -1,6 +1,6 @@
 import config from "@/config.json";
 
-export type MonetizationProvider = "carbon" | "ethicalads" | "buysellads" | "none";
+export type MonetizationProvider = "carbon" | "ethicalads" | "buysellads" | "adsense" | "none";
 
 export interface AdPlacement {
   slot: string;
@@ -12,7 +12,7 @@ export interface AdPlacement {
 export interface MonetizationConfig {
   provider: MonetizationProvider;
   providerId: string;
-  carbonId?: string;
+  adSensePublisherId: string;
   buyMeACoffee: {
     enabled: boolean;
     url: string;
@@ -35,8 +35,8 @@ export interface MonetizationConfig {
 
 export const MONETIZATION: MonetizationConfig = {
   provider: config.monetization.provider as MonetizationProvider,
-  providerId: config.monetization.carbonId || "",
-  carbonId: config.monetization.carbonId,
+  providerId: config.monetization.adSensePublisherId || "",
+  adSensePublisherId: config.monetization.adSensePublisherId || "",
   buyMeACoffee: config.monetization.buyMeACoffee,
   gitHubSponsors: config.monetization.gitHubSponsors,
   koFi: config.monetization.koFi,

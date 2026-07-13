@@ -5,6 +5,7 @@ import { softwareSchema } from "@/lib/seo";
 import Navigation from "@/components/sections/Navigation";
 import Footer from "@/components/sections/Footer";
 import CursorFollower from "@/components/ui/CursorFollower";
+import PIPVideoPlayer from "@/components/ui/PIPVideoPlayer";
 import "./globals.css";
 
 const inter = Inter({
@@ -61,6 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Navigation />
         <main>{children}</main>
         <Footer />
+        <PIPVideoPlayer />
       </body>
     </html>
   );
