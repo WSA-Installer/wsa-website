@@ -150,7 +150,7 @@
   },
   "monetization": {
     "provider": "adsense",
-    "adSensePublisherId": "pub-0000000000000000",
+    "adSensePublisherId": "ca-pub-7315130185108046",
     "buyMeACoffee": {
       "enabled": true,
       "url": "https://buymeacoffee.com/mrcyberdev",
