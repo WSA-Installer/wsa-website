@@ -19,7 +19,7 @@ export const SITE = {
     "Self-Update System",
   ],
   badges: ["Windows 10/11", "Free & Open Source", "One-Click Setup"],
-  siteUrl: "https://gshellmr-code.github.io/wsa-installer-website",
+  siteUrl: "https://wsa-installer.github.io/wsa-website",
   githubUrl: "https://github.com/gshellmr-code/ads-json-data",
   youtubeUrl: "https://www.youtube.com/@AT_Tech_Zone",
   buymeacoffeeUrl: "https://buymeacoffee.com/mrcyberdev",
