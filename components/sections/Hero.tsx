@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { SITE, CONTENT } from "@/lib/config";
+import { SITE } from "@/lib/config";
+import { useDownloadUrls } from "@/hooks/useRuntimeConfig";
 import Button from "@/components/ui/Button";
 import MagneticButton from "@/components/ui/MagneticButton";
 import ScrollReveal from "@/components/ui/ScrollReveal";
@@ -11,6 +12,7 @@ import { Download, Code2, ChevronDown, Play, Star } from "lucide-react";
 const words = ["Run Android Apps", "Install Play Store", "One Click Away"];
 
 export default function Hero() {
+  const downloads = useDownloadUrls();
   const [wordIndex, setWordIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
@@ -76,9 +78,9 @@ export default function Hero() {
         <ScrollReveal delay={0.4}>
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <MagneticButton>
-              <Button variant="primary" size="lg" href={CONTENT.downloads.installer.url} download>
+              <Button variant="primary" size="lg" href={downloads.installer.url} download>
                 <Download className="h-5 w-5" />
-                Download Installer ({CONTENT.downloads.installer.size})
+                Download Installer ({downloads.installer.size})
               </Button>
             </MagneticButton>
             <MagneticButton>
@@ -115,7 +117,7 @@ export default function Hero() {
               </div>
               <span className="text-xs text-text-tertiary">Open Source</span>
             </a>
-            <a href={CONTENT.downloads.bundle.url} download className="group flex flex-col items-center gap-1.5">
+            <a href={downloads.bundle.url} download className="group flex flex-col items-center gap-1.5">
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl glass transition-all duration-300 group-hover:glass-hover group-hover:scale-105">
                 <Download className="h-6 w-6 text-accent" />
               </div>

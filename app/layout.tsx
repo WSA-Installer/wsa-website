@@ -6,6 +6,7 @@ import Navigation from "@/components/sections/Navigation";
 import Footer from "@/components/sections/Footer";
 import CursorFollower from "@/components/ui/CursorFollower";
 import PIPVideoPlayer from "@/components/ui/PIPVideoPlayer";
+import { ConfigProvider } from "@/hooks/useRuntimeConfig";
 import "./globals.css";
 
 const inter = Inter({
@@ -58,11 +59,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="noise-bg" style={{ cursor: "none" }}>
-        <CursorFollower />
-        <Navigation />
-        <main>{children}</main>
-        <Footer />
-        <PIPVideoPlayer />
+        <ConfigProvider>
+          <CursorFollower />
+          <Navigation />
+          <main>{children}</main>
+          <Footer />
+          <PIPVideoPlayer />
+        </ConfigProvider>
       </body>
     </html>
   );

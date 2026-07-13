@@ -2,12 +2,14 @@
 
 import { motion } from "framer-motion";
 import { Download as DownloadIcon, Package, Shield, FileText, Hash, Terminal } from "lucide-react";
-import { CONTENT, SITE } from "@/lib/config";
+import { SITE } from "@/lib/config";
+import { useDownloadUrls } from "@/hooks/useRuntimeConfig";
 import Button from "@/components/ui/Button";
 import MagneticButton from "@/components/ui/MagneticButton";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export default function DownloadSection() {
+  const downloads = useDownloadUrls();
   return (
     <section id="download" className="relative border-t border-border py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -44,11 +46,11 @@ export default function DownloadSection() {
                 <div className="mt-6 space-y-3">
                   <div className="flex items-center gap-3 text-sm">
                     <Package className="h-4 w-4 text-text-tertiary" />
-                    <span className="text-text-secondary">{CONTENT.downloads.installer.label}</span>
+                    <span className="text-text-secondary">{downloads.installer.label}</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm">
                     <FileText className="h-4 w-4 text-text-tertiary" />
-                    <span className="text-text-secondary">Size: {CONTENT.downloads.installer.size}</span>
+                    <span className="text-text-secondary">Size: {downloads.installer.size}</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm">
                     <Shield className="h-4 w-4 text-text-tertiary" />
@@ -57,9 +59,9 @@ export default function DownloadSection() {
                 </div>
                 <div className="mt-8">
                   <MagneticButton>
-                    <Button variant="primary" size="lg" href={CONTENT.downloads.installer.url} download className="w-full">
+                    <Button variant="primary" size="lg" href={downloads.installer.url} download className="w-full">
                       <DownloadIcon className="h-5 w-5" />
-                      Download {CONTENT.downloads.installer.size}
+                      Download {downloads.installer.size}
                     </Button>
                   </MagneticButton>
                 </div>
@@ -85,22 +87,22 @@ export default function DownloadSection() {
                 <div className="mt-6 space-y-3">
                   <div className="flex items-center gap-3 text-sm">
                     <Package className="h-4 w-4 text-text-tertiary" />
-                    <span className="text-text-secondary">{CONTENT.downloads.bundle.label}</span>
+                    <span className="text-text-secondary">{downloads.bundle.label}</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm">
                     <FileText className="h-4 w-4 text-text-tertiary" />
-                    <span className="text-text-secondary">Size: {CONTENT.downloads.bundle.size}</span>
+                    <span className="text-text-secondary">Size: {downloads.bundle.size}</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm">
                     <Hash className="h-4 w-4 text-text-tertiary" />
                     <span className="text-[10px] text-text-tertiary break-all font-mono">
-                      SHA256: {CONTENT.downloads.bundle.sha256}
+                      SHA256: {downloads.bundle.sha256}
                     </span>
                   </div>
                 </div>
                 <div className="mt-8">
                   <MagneticButton>
-                    <Button variant="secondary" size="lg" href={CONTENT.downloads.bundle.url} download className="w-full">
+                    <Button variant="secondary" size="lg" href={downloads.bundle.url} download className="w-full">
                       <Package className="h-5 w-5" />
                       Download Bundle
                     </Button>

@@ -2,23 +2,26 @@
 
 import { useEffect, useRef } from "react";
 import { MONETIZATION } from "@/lib/config";
+import { useConfig } from "@/hooks/useRuntimeConfig";
 
 export function GoogleAdSense() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const cfg = useConfig();
+  const pubId = cfg.monetization.adSensePublisherId || MONETIZATION.adSensePublisherId;
 
   useEffect(() => {
-    if (!containerRef.current || MONETIZATION.provider !== "adsense") return;
+    if (!containerRef.current || cfg.monetization.provider !== "adsense") return;
 
     if (!document.querySelector("script[src*='adsbygoogle']")) {
       const script = document.createElement("script");
-      script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-${MONETIZATION.adSensePublisherId}`;
+      script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-${pubId}`;
       script.async = true;
       script.crossOrigin = "anonymous";
       document.head.appendChild(script);
     }
-  }, []);
+  }, [cfg.monetization.provider]);
 
-  if (MONETIZATION.provider !== "adsense") return null;
+  if (cfg.monetization.provider !== "adsense") return null;
 
   return <div ref={containerRef} />;
 }
@@ -31,10 +34,12 @@ interface AdSenseAdProps {
 
 export function AdSenseAd({ slot, format = "auto", className = "" }: AdSenseAdProps) {
   const insRef = useRef<HTMLModElement>(null);
+  const cfg = useConfig();
+  const pubId = cfg.monetization.adSensePublisherId || MONETIZATION.adSensePublisherId;
 
   useEffect(() => {
     try {
-      if (insRef.current && MONETIZATION.provider === "adsense") {
+      if (insRef.current && cfg.monetization.provider === "adsense") {
         const { adsbygoogle } = window as unknown as { adsbygoogle?: unknown[] };
         if (adsbygoogle) {
           adsbygoogle.push({});
@@ -43,9 +48,9 @@ export function AdSenseAd({ slot, format = "auto", className = "" }: AdSenseAdPr
     } catch {
       // silent fail
     }
-  }, []);
+  }, [cfg.monetization.provider]);
 
-  if (MONETIZATION.provider !== "adsense") return null;
+  if (cfg.monetization.provider !== "adsense") return null;
 
   return (
     <div className={`flex justify-center ${className}`}>
@@ -53,7 +58,7 @@ export function AdSenseAd({ slot, format = "auto", className = "" }: AdSenseAdPr
         ref={insRef}
         className="adsbygoogle"
         style={{ display: "block" }}
-        data-ad-client={`ca-${MONETIZATION.adSensePublisherId}`}
+        data-ad-client={`ca-${pubId}`}
         data-ad-slot={slot}
         data-ad-format={format}
         data-full-width-responsive="true"
@@ -68,7 +73,8 @@ interface AdSlotProps {
 }
 
 export function AdSlot({ slot, className = "" }: AdSlotProps) {
-  const placement = MONETIZATION.adPlacements.find((a) => a.slot === slot);
+  const cfg = useConfig();
+  const placement = (cfg.monetization.adPlacements || MONETIZATION.adPlacements).find((a) => a.slot === slot);
   if (!placement?.enabled) return null;
 
   return (
@@ -80,7 +86,7 @@ export function AdSlot({ slot, className = "" }: AdSlotProps) {
         <span className="text-[10px] uppercase tracking-widest text-text-tertiary">
           — Sponsored —
         </span>
-        {MONETIZATION.provider === "adsense" && (
+        {(cfg.monetization.provider || MONETIZATION.provider) === "adsense" && (
           <AdSenseAd slot={slot} format="auto" />
         )}
       </div>
