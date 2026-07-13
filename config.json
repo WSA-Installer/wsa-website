@@ -183,13 +183,13 @@
   "pipVideo": {
     "enabled": true,
     "videoUrl": "https://youtu.be/DJMsXSr1jec",
-    "embedUrl": "https://www.youtube-nocookie.com/embed/DJMsXSr1jec",
-    "thumbnailUrl": "https://img.youtube.com/vi/DJMsXSr1jec/maxresdefault.jpg",
-    "title": "Build $10,000 AI 3D Websites in 10 Minutes",
-    "description": "Google Anti-Gravity Tutorial — High-end Apple style 3D product websites.",
-    "ctaText": "Learn how to build premium 3D websites with Apple-style scroll animations.",
-    "ctaButton": "Watch Tutorial",
-    "ctaUrl": "https://youtu.be/DJMsXSr1jec",
+    "embedUrl": "",
+    "thumbnailUrl": "",
+    "title": "Windows 11 WSA Crash Fix | Google Play Store Not Opening Problem Solved",
+    "description": "Are you facing WSA auto close or crash issues on Windows 11? 😱 Don’t worry! In this video, we show the **exact solution to fix WSA and Google Play Store issues**. Watch step by step as we guide you through the process of making WSA fully functional on Windows 11 with Google Play Store support. ✅",
+    "ctaText": "Subscribe For Me For More Video",
+    "ctaButton": "Visit To Channel",
+    "ctaUrl": "https://www.youtube.com/@AT_Tech_Zone?sub_confirmation=1&utm_source=chatgpt.com",
     "startTime": 1120,
     "endTime": 1815
   }
