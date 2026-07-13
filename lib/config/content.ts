@@ -1,0 +1,300 @@
+export const CONTENT = {
+  downloads: {
+    installer: {
+      label: "WSA_Installer_Setup.exe",
+      size: "228 MB",
+      url: "https://github.com/gshellmr-code/ads-json-data/releases/download/bundle-1.0/WSA_Installer_Setup.exe",
+    },
+    bundle: {
+      label: "bundle.wsa",
+      size: "1.21 GB",
+      sha256: "9b59ba2b2084b518499afb6b3d0e66148a9fc83f755fc7a54ed7c97457760005",
+      url: "https://github.com/gshellmr-code/ads-json-data/releases/download/bundle-1.0/bundle.wsa",
+    },
+  },
+  navItems: [
+    { label: "Features", href: "#features" },
+    { label: "How It Works", href: "#how-it-works" },
+    { label: "Requirements", href: "#requirements" },
+    { label: "Download", href: "#download" },
+    { label: "FAQ", href: "#faq" },
+  ],
+  features: [
+    {
+      title: "Smart System Scan",
+      desc: "Detects VT-x, Hyper-V, VirtualMachinePlatform, HypervisorPlatform, and WSL in real-time using 5 different detection methods including CPUID, wmic, systeminfo, PowerShell, and registry.",
+      icon: "Cpu",
+      gradient: "from-blue-500/20 to-cyan-500/20",
+    },
+    {
+      title: "Auto Configuration",
+      desc: "Enables all required Windows features automatically with administrator privileges. No manual BIOS changes or Windows Feature dialog hunting needed.",
+      icon: "Settings2",
+      gradient: "from-purple-500/20 to-pink-500/20",
+    },
+    {
+      title: "One-Click Install",
+      desc: "Handles download, extraction, and setup end-to-end. From archive to running Android subsystem in one click with 6 automated phases.",
+      icon: "Zap",
+      gradient: "from-yellow-500/20 to-orange-500/20",
+    },
+    {
+      title: "Play Store Patching",
+      desc: "Integrates Google Play Store (MindTheGapps 13.0) automatically with MagiskOnWSALocal patching and automated ADB authorization via pywinauto.",
+      icon: "Store",
+      gradient: "from-green-500/20 to-emerald-500/20",
+    },
+    {
+      title: "Parallel Chunked Downloads",
+      desc: "Downloads archives in 30 parallel chunks with resume support, real-time progress tracking, speed calculation, and ETA for fast reliable downloads.",
+      icon: "Download",
+      gradient: "from-blue-500/20 to-indigo-500/20",
+    },
+    {
+      title: "WSAPatch for Windows 10",
+      desc: "Binary patches WsaClient.exe for compatibility on Windows 10, fixing the crash that occurs when running WSA on non-Windows 11 systems.",
+      icon: "Wrench",
+      gradient: "from-red-500/20 to-rose-500/20",
+    },
+    {
+      title: "Background Service",
+      desc: "WSABackgroundService runs as a Windows SCM service monitoring WSA ADB port, managing the Play Store SDK, and auto-restarting on failure.",
+      icon: "Activity",
+      gradient: "from-teal-500/20 to-cyan-500/20",
+    },
+    {
+      title: "Self-Update System",
+      desc: "Checks the server for updates and installs them silently. 6-step update dialog with integrity verification, version checking, and seamless restart.",
+      icon: "RefreshCw",
+      gradient: "from-violet-500/20 to-purple-500/20",
+    },
+    {
+      title: "File Sharing (WebDAV)",
+      desc: "Mounts WSA filesystem as Windows drive letters (X:/ R:/) via WebDAV over ADB. Browse, edit, and transfer files seamlessly between Windows and Android.",
+      icon: "FolderOpen",
+      gradient: "from-amber-500/20 to-yellow-500/20",
+    },
+    {
+      title: "Rust Security Gateway",
+      desc: "Zero-trust architecture with signature verification, encrypted config parsing, and anti-tamper protection via native Rust widget_ui.pyd module.",
+      icon: "Shield",
+      gradient: "from-sky-500/20 to-blue-500/20",
+    },
+    {
+      title: "NSIS Professional Installer",
+      desc: "Industry-standard Windows installer with wizard UI, silent install support (/S), maintenance mode, repair, and uninstall options integrated with Windows Settings.",
+      icon: "Package",
+      gradient: "from-gray-500/20 to-slate-500/20",
+    },
+    {
+      title: "Embedded Python Runtime",
+      desc: "Self-contained Python 3.14 runtime for Play Store patcher at emb_py/. No external dependencies needed after installation — runs completely offline.",
+      icon: "Terminal",
+      gradient: "from-lime-500/20 to-green-500/20",
+    },
+  ],
+  howItWorks: [
+    {
+      step: 1,
+      title: "Download",
+      desc: "Download the WSA Installer setup file (228 MB) from the official release. Optionally download the bundle.wsa (1.21 GB) for offline installation without internet.",
+      icon: "Download",
+    },
+    {
+      step: 2,
+      title: "Run as Administrator",
+      desc: "Right-click WSA_Installer_Setup.exe and select 'Run as administrator'. Accept the UAC prompt to grant installation privileges for system-level changes.",
+      icon: "Shield",
+    },
+    {
+      step: 3,
+      title: "System Check",
+      desc: "The installer automatically scans your system for virtualization support, Hyper-V, VirtualMachinePlatform, and WSL — and enables any missing features automatically.",
+      icon: "Search",
+    },
+    {
+      step: 4,
+      title: "Install WSA",
+      desc: "Downloads the correct WSA build (2407.40000.4.0), extracts the 7z archive, applies Developer Mode settings, patches WsaClient, and registers the Android subsystem.",
+      icon: "HardDrive",
+    },
+    {
+      step: 5,
+      title: "Add Play Store",
+      desc: "Patches Google Apps (MindTheGapps 13.0) onto WSA via MagiskOnWSALocal, automates ADB authorization, and installs Play Store with shortcuts in the Start Menu.",
+      icon: "Store",
+    },
+    {
+      step: 6,
+      title: "Complete",
+      desc: "Play Store and WSA shortcuts appear in Start Menu. WSABackgroundService starts monitoring WSA status. Launch Android apps directly from your desktop.",
+      icon: "CheckCircle2",
+    },
+  ],
+  screens: [
+    {
+      title: "Welcome Screen",
+      desc: "Clean intro page with glassmorphism design, version info, and installation path selection.",
+      icon: "Monitor",
+      phase: "Step 0: Welcome",
+    },
+    {
+      title: "System Check",
+      desc: "Real-time virtualization detection with 5 verification methods and auto-fix capabilities.",
+      icon: "Cpu",
+      phase: "Step 1: Check",
+    },
+    {
+      title: "Download & Install",
+      desc: "Parallel 30-chunk downloads with live progress bar, download speed, ETA, and merge status.",
+      icon: "Download",
+      phase: "Step 2: Install",
+    },
+    {
+      title: "Play Store Patching",
+      desc: "Automated GApps integration with 7 sub-phases: locate, verify, extract, patch, ADB, install, finalize.",
+      icon: "Store",
+      phase: "Step 3: Play Store",
+    },
+    {
+      title: "Installation Complete",
+      desc: "Final step creates shortcuts, configures background service, and offers WSA launch option.",
+      icon: "CheckCircle2",
+      phase: "Step 4: Complete",
+    },
+    {
+      title: "File Sharing",
+      desc: "WebDAV-based filesystem mounting — browse, edit, and transfer Android files from Windows Explorer as X:/ and R:/ drives.",
+      icon: "FolderOpen",
+      phase: "Feature: WebDAV",
+    },
+  ],
+  systemRequirements: {
+    os: { label: "OS", min: "Windows 10 (build 19041+)", rec: "Windows 11 22H2+" },
+    ram: { label: "RAM", min: "8 GB", rec: "16 GB" },
+    disk: { label: "Disk Space", min: "10 GB free", rec: "SSD with 20 GB free" },
+    internet: { label: "Internet", min: "Required for initial download", rec: "Broadband recommended" },
+    privileges: { label: "Privileges", min: "Administrator", rec: "Administrator" },
+    virtualization: { label: "Virtualization", min: "Enabled in BIOS/UEFI", rec: "Intel VT-x or AMD-V" },
+  },
+  windowsFeatures: [
+    { name: "Hyper-V", desc: "Microsoft's hardware virtualization platform" },
+    { name: "VirtualMachinePlatform", desc: "Required virtual machine platform for WSA" },
+    { name: "HypervisorPlatform", desc: "Windows hypervisor interface" },
+    { name: "Windows Subsystem for Linux", desc: "WSL support required by WSA" },
+  ],
+  documentation: [
+    {
+      title: "Flet GUI (app.py)",
+      desc: "~11,000 lines of Python driving the 5-step frameless wizard, real-time progress UI, glassmorphism design, and all sub-dialogs including repair, update, uninstall, and file sharing.",
+      icon: "FileCode",
+    },
+    {
+      title: "InstallerLogic Engine",
+      desc: "Handles parallel chunked downloads with resume support, 7z extraction via tar.exe, WSA package verification (filelist.txt), registry patching, and ADB automation for Play Store.",
+      icon: "Settings",
+    },
+    {
+      title: "WSABackgroundService",
+      desc: "Windows SCM service that monitors WSA ADB port, manages the Play Store SDK via embedded Python 3.14, auto-mounts WebDAV file shares (X:/ R:/), and checks for updates.",
+      icon: "HardDrive",
+    },
+    {
+      title: "ConfigController",
+      desc: "Three-tier configuration system: Default → Developer Mode → Server (remote JSON). Source-tracked with schema validation. Polls GitHub for remote config updates every 60 seconds.",
+      icon: "Wrench",
+    },
+    {
+      title: "Rust Native Modules",
+      desc: "widget_ui.pyd provides a zero-trust security gateway with signature verification, encrypted config parsing, and decompression. playstore_patcher_mem.pyd is the Play Store patcher SDK.",
+      icon: "Shield",
+    },
+    {
+      title: "Build Pipeline",
+      desc: "Nuitka compiles app.py → app.pyd for source protection. PyInstaller bundles into onedir. Flet.exe is patched with custom icon and version. NSIS creates the final setup EXE.",
+      icon: "Code2",
+    },
+  ],
+  techStack: [
+    { name: "Python", version: "3.14", role: "Application framework with Flet UI" },
+    { name: "Rust", version: "Latest", role: "Security gateway & Play Store patcher SDK" },
+    { name: "Flet", version: "Latest", role: "Cross-platform GUI framework (Flutter-based)" },
+    { name: "Nuitka", version: "Latest", role: "Python to C compilation (source protection)" },
+    { name: "PyInstaller", version: "Latest", role: "Application bundling (onedir mode)" },
+    { name: "NSIS", version: "Latest", role: "Windows installer packaging" },
+    { name: "PyQt6", version: "Latest", role: "Qt6 bindings for ad overlay" },
+    { name: "PySide6", version: "Latest", role: "Qt6 bindings for Play Store patcher" },
+  ],
+  faq: [
+    {
+      q: "What is WSA Installer?",
+      a: "WSA Installer is a professional open-source tool that automates installing Windows Subsystem for Android (WSA) with Google Play Store on Windows 10/11. It handles system checks, downloads, extraction, patching, and configuration — all in one click.",
+    },
+    {
+      q: "Is WSA Installer free?",
+      a: "Yes, WSA Installer is completely free and open-source under the MIT License. You can download, use, and modify it without any restrictions.",
+    },
+    {
+      q: "What are the system requirements?",
+      a: "Windows 10 (build 19041+) or Windows 11, 8 GB RAM (16 GB recommended), 10 GB free disk space (SSD with 20 GB recommended), Intel VT-x or AMD-V virtualization enabled in BIOS, and Administrator privileges. The installer checks all these automatically.",
+    },
+    {
+      q: "Does it work on Windows 10?",
+      a: "Yes! WSA Installer fully supports Windows 10 (build 19041+). It includes the WSAPatch fix that binary patches WsaClient.exe for compatibility, fixing the crash that occurs on Windows 10 systems.",
+    },
+    {
+      q: "Do I need to download anything separately?",
+      a: "No. The installer handles everything. It downloads the correct WSA build from GitHub releases automatically. Optionally, you can download bundle.wsa (1.21 GB) for offline or air-gapped installation.",
+    },
+    {
+      q: "How does Play Store integration work?",
+      a: "The installer uses MindTheGapps 13.0 and MagiskOnWSALocal to patch Google Play Services and Play Store onto the WSA installation. ADB authorization is fully automated via pywinauto GUI automation — no manual ADB commands needed.",
+    },
+    {
+      q: "Can I install WSA without Play Store?",
+      a: "Yes. The installer offers two paths: 'Install WSA Basic' for a minimal WSA setup without Google apps, or 'Add Play Store' which patches MindTheGapps 13.0 onto the existing WSA installation.",
+    },
+    {
+      q: "Is there a background service?",
+      a: "Yes, WSABackgroundService is a Windows Service that monitors WSA status, manages the Play Store patcher SDK, auto-mounts file shares, and automatically restarts on failure.",
+    },
+    {
+      q: "How do I update WSA Installer?",
+      a: "The installer has a built-in self-update system with a 6-step dialog. It checks the server for new versions, downloads in parallel chunks, verifies integrity via PE header and version check, and installs silently.",
+    },
+    {
+      q: "Is there a silent install option?",
+      a: "Yes. Run 'WSA_Installer_Setup.exe /S' for a fully silent automated installation. Perfect for enterprise deployment, MDM solutions, and automation scenarios.",
+    },
+    {
+      q: "WSA apps keep crashing after Windows Update — what do I do?",
+      a: "Some Windows Updates (like KB5062553) have been known to break WSA GApps builds. WSA Installer helps by providing automated crash recovery, the ability to use NoGApps builds with Aurora Store, and a 4-step WSA repair dialog.",
+    },
+    {
+      q: "What is the WSA bundle and do I need it?",
+      a: "The bundle.wsa (1.21 GB) is a pre-packaged archive containing both WSA Basic and WSA+Play Store packages. It's optional — ideal for offline installation, air-gapped systems, or installing on multiple PCs without re-downloading.",
+    },
+    {
+      q: "How does WSA Installer handle security?",
+      a: "WSA Installer uses a zero-trust architecture with a Rust native security gateway (widget_ui.pyd) that provides signature verification, encrypted config parsing, and anti-tamper protection. Source code is protected via Nuitka compilation.",
+    },
+    {
+      q: "Can I repair a broken WSA installation?",
+      a: "Yes. WSA Installer includes a dedicated 4-step repair dialog: 1) Detect WSA installation, 2) Stop all WSA processes, 3) Backup user data, 4) Uninstall and reinstall WSA. Accessible from Windows Settings or CLI.",
+    },
+    {
+      q: "How does file sharing between Windows and WSA work?",
+      a: "WSA Installer includes a WebDAV-based file sharing system. It mounts the WSA filesystem as Windows drive letters (X:/ and R:/) via ADB, allowing you to browse, edit, and transfer files using Windows File Explorer.",
+    },
+  ],
+  heroStats: [
+    { icon: "Star", value: "17.9K", label: "GitHub Stars" },
+    { icon: "Download", value: "1M+", label: "Downloads" },
+    { icon: "Package", value: "228 MB", label: "Installer Size" },
+  ],
+  releases: [
+    { version: "1.2.0.0", date: "2026-04", label: "Latest", notes: ["WSAPatch improvements", "Updated WSA 2407.40000.4.0 support", "Enhanced ADB automation"] },
+    { version: "1.1.0.0", date: "2026-01", label: "", notes: ["Background service stability", "Play Store patcher SDK update", "Rust security gateway"] },
+    { version: "1.0.0.0", date: "2025-09", label: "Initial", notes: ["First public release", "5-step wizard", "Parallel chunked downloads", "Play Store integration"] },
+  ],
+} as const;

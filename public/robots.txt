@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gshellmr-code.github.io/wsa-installer-website/sitemap.xml

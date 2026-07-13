@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-bg: #0a0a0f;
+  --color-bg-secondary: #12121a;
+  --color-bg-card: #1a1a2e;
+  --color-bg-card-hover: #22223a;
+  --color-surface: rgba(26, 26, 46, 0.6);
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-hover: rgba(255, 255, 255, 0.15);
+  --color-primary: #0078d4;
+  --color-primary-hover: #0086e6;
+  --color-accent: #00bcd4;
+  --color-accent-hover: #26c6da;
+  --color-success: #30d158;
+  --color-warning: #ffd60a;
+  --color-error: #ff453a;
+  --color-text-primary: #f5f5f7;
+  --color-text-secondary: #8e8e93;
+  --color-text-tertiary: #636366;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "SF Mono", "Fira Code", monospace;
+}
+
+@keyframes gradient-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(5%, 5%) scale(1.05); }
+  50% { transform: translate(-5%, 2%) scale(0.95); }
+  75% { transform: translate(3%, -3%) scale(1.02); }
+}
+
+@keyframes blob-morph {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 120, 212, 0.15); }
+  50% { box-shadow: 0 0 40px rgba(0, 120, 212, 0.3), 0 0 60px rgba(0, 120, 212, 0.1); }
+}
+
+@layer base {
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection { background: rgba(0, 120, 212, 0.3); color: #fff; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--color-bg); }
+  ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-text-tertiary); }
+}
+
+@layer utilities {
+  .glass {
+    background: var(--color-surface);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--color-border);
+  }
+  .glass-hover {
+    background: var(--color-surface);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--color-border-hover);
+  }
+  .glass-strong {
+    background: rgba(26, 26, 46, 0.8);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid var(--color-border);
+  }
+  .text-gradient {
+    background: linear-gradient(135deg, #0078d4, #00bcd4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-white {
+    background: linear-gradient(135deg, #f5f5f7, #8e8e93);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .glow {
+    box-shadow: 0 0 20px rgba(0, 120, 212, 0.15), 0 0 40px rgba(0, 120, 212, 0.05);
+  }
+  .glow-accent {
+    box-shadow: 0 0 20px rgba(0, 188, 212, 0.15), 0 0 40px rgba(0, 188, 212, 0.05);
+  }
+  .glow-success {
+    box-shadow: 0 0 20px rgba(48, 209, 88, 0.15), 0 0 40px rgba(48, 209, 88, 0.05);
+  }
+  .noise-bg::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+  .animate-gradient {
+    animation: gradient-drift 20s ease-in-out infinite;
+  }
+  .animate-blob {
+    animation: blob-morph 8s ease-in-out infinite;
+  }
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  .animate-pulse-glow {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "WSA Installer",
+  "short_name": "WSA Installer",
+  "description": "Windows Subsystem for Android — One-Click Install with Google Play Store",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#0a0a0f",
+  "icons": [
+    {
+      "src": "/favicon/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
