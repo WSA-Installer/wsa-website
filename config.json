@@ -186,6 +186,10 @@
   },
   "pipVideo": {
     "enabled": true,
-    "videoUrl": "https://youtu.be/-h-YR-N5BrA"
+    "videoUrl": "https://youtu.be/-h-YR-N5BrA",
+    "description": "AT Tech Zone - Step-by-step WSA installation guide",
+    "ctaText": "Subscribe for more WSA tutorials and guides.",
+    "ctaButton": "Subscribe",
+    "ctaUrl": "https://www.youtube.com/@AT_Tech_Zone?sub_confirmation=1"
   }
 }
