@@ -3,28 +3,6 @@
 import { useEffect, useRef } from "react";
 import { useConfig } from "@/hooks/useRuntimeConfig";
 
-export function GoogleAdSense() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const cfg = useConfig();
-  const pubId = cfg.monetization.adSensePublisherId;
-
-  useEffect(() => {
-    if (!containerRef.current || cfg.monetization.provider !== "adsense") return;
-
-    if (!document.querySelector("script[src*='adsbygoogle']")) {
-      const script = document.createElement("script");
-      script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-${pubId}`;
-      script.async = true;
-      script.crossOrigin = "anonymous";
-      document.head.appendChild(script);
-    }
-  }, [cfg.monetization.provider]);
-
-  if (cfg.monetization.provider !== "adsense") return null;
-
-  return <div ref={containerRef} />;
-}
-
 interface AdSenseAdProps {
   slot: string;
   format?: "auto" | "rectangle" | "horizontal" | "vertical";
@@ -37,17 +15,19 @@ export function AdSenseAd({ slot, format = "auto", className = "" }: AdSenseAdPr
   const pubId = cfg.monetization.adSensePublisherId;
 
   useEffect(() => {
-    try {
-      if (insRef.current && cfg.monetization.provider === "adsense") {
-        const { adsbygoogle } = window as unknown as { adsbygoogle?: unknown[] };
-        if (adsbygoogle) {
-          adsbygoogle.push({});
+    if (!insRef.current || cfg.monetization.provider !== "adsense") return;
+    const timer = setTimeout(() => {
+      try {
+        const w = window as unknown as { adsbygoogle?: unknown[] };
+        if (w.adsbygoogle) {
+          w.adsbygoogle.push({});
         }
+      } catch {
+        // silent fail
       }
-    } catch {
-      // silent fail
-    }
-  }, [cfg.monetization.provider]);
+    }, 200);
+    return () => clearTimeout(timer);
+  }, [slot, cfg.monetization.provider]);
 
   if (cfg.monetization.provider !== "adsense") return null;
 
@@ -57,7 +37,7 @@ export function AdSenseAd({ slot, format = "auto", className = "" }: AdSenseAdPr
         ref={insRef}
         className="adsbygoogle"
         style={{ display: "block" }}
-        data-ad-client={`ca-${pubId}`}
+        data-ad-client={pubId}
         data-ad-slot={slot}
         data-ad-format={format}
         data-full-width-responsive="true"
