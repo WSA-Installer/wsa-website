@@ -181,13 +181,15 @@
   },
   "pipVideo": {
     "enabled": true,
-    "videoUrl": "https://youtu.be/VrVzpEJgtqY",
-    "embedUrl": "https://www.youtube-nocookie.com/embed/VrVzpEJgtqY",
-    "thumbnailUrl": "https://i.makeagif.com/media/5-01-2026/JCEQKy.gif",
-    "title": "Launch Your Website Professionally with High-Performance Hosting",
-    "description": "From setup to scaling — a complete workflow for beginners and advanced users.",
-    "ctaText": "Start your online journey with a high-performance hosting solution optimized for speed and scalability.",
-    "ctaButton": "Get Started Now",
-    "ctaUrl": "https://www.hostinger.com/"
+    "videoUrl": "https://youtu.be/DJMsXSr1jec",
+    "embedUrl": "https://www.youtube-nocookie.com/embed/DJMsXSr1jec",
+    "thumbnailUrl": "https://img.youtube.com/vi/DJMsXSr1jec/maxresdefault.jpg",
+    "title": "Build $10,000 AI 3D Websites in 10 Minutes",
+    "description": "Google Anti-Gravity Tutorial — High-end Apple style 3D product websites.",
+    "ctaText": "Learn how to build premium 3D websites with Apple-style scroll animations.",
+    "ctaButton": "Watch Tutorial",
+    "ctaUrl": "https://youtu.be/DJMsXSr1jec",
+    "startTime": 20,
+    "endTime": 85
   }
 }
