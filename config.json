@@ -70,12 +70,16 @@
     { "step": 6, "title": "Complete", "desc": "Play Store and WSA shortcuts appear in Start Menu. WSABackgroundService starts monitoring WSA status. Launch Android apps directly from your desktop.", "icon": "CheckCircle2" }
   ],
   "screens": [
-    { "title": "Welcome Screen", "desc": "Clean intro page with glassmorphism design, version info, and installation path selection.", "icon": "Monitor", "phase": "Step 0: Welcome" },
-    { "title": "System Check", "desc": "Real-time virtualization detection with 5 verification methods and auto-fix capabilities.", "icon": "Cpu", "phase": "Step 1: Check" },
-    { "title": "Download & Install", "desc": "Parallel 30-chunk downloads with live progress bar, download speed, ETA, and merge status.", "icon": "Download", "phase": "Step 2: Install" },
-    { "title": "Play Store Patching", "desc": "Automated GApps integration with 7 sub-phases: locate, verify, extract, patch, ADB, install, finalize.", "icon": "Store", "phase": "Step 3: Play Store" },
-    { "title": "Installation Complete", "desc": "Final step creates shortcuts, configures background service, and offers WSA launch option.", "icon": "CheckCircle2", "phase": "Step 4: Complete" },
-    { "title": "File Sharing", "desc": "WebDAV-based filesystem mounting — browse, edit, and transfer Android files from Windows Explorer as X:/ and R:/ drives.", "icon": "FolderOpen", "phase": "Feature: WebDAV" }
+    { "title": "Welcome Screen", "desc": "Clean intro page with glassmorphism design, version info, and installation path selection.", "icon": "Monitor", "phase": "Step 0: Welcome", "image": "screenshot-welcome.png" },
+    { "title": "System Check", "desc": "Real-time virtualization detection with 5 verification methods and auto-fix capabilities.", "icon": "Cpu", "phase": "Step 1: Check", "image": "screenshot-system-check.png" },
+    { "title": "Download & Install", "desc": "Parallel 30-chunk downloads with live progress bar, download speed, ETA, and merge status.", "icon": "Download", "phase": "Step 2: Install", "image": "screenshot-install-progress.png" },
+    { "title": "Play Store Patching", "desc": "Automated GApps integration with 7 sub-phases: locate, verify, extract, patch, ADB, install, finalize.", "icon": "Store", "phase": "Step 3: PlayStore", "image": "screenshot-play-store.png" },
+    { "title": "Installation Complete", "desc": "Final step creates shortcuts, configures background service, and offers WSA launch option.", "icon": "CheckCircle2", "phase": "Step 4: Complete", "image": "screenshot-complete.png" },
+    { "title": "File Sharing", "desc": "WebDAV-based filesystem mounting — browse, edit, and transfer Android files from Windows Explorer as X:/ and R:/ drives.", "icon": "FolderOpen", "phase": "Feature: WebDAV", "image": "screenshot-webdav.png" },
+    { "title": "App Interface Preview", "desc": "Real-time installation dashboard showing download speed, progress, time remaining, and parallel chunk tracking.", "icon": "Download", "phase": "Feature: Dashboard", "image": "feature-preview.png" },
+    { "title": "Social Preview", "desc": "Open Graph image shown when sharing the WSA Installer website on social media platforms.", "icon": "Monitor", "phase": "Branding", "image": "og-image.png" },
+    { "title": "QR Download", "desc": "Scan this QR code on your phone to visit the website and download the installer directly.", "icon": "Download", "phase": "Mobile Access", "image": "qr-download.png" },
+    { "title": "App Icon", "desc": "WSA Installer application icon — the brand identity used across the installer and website.", "icon": "Monitor", "phase": "Branding", "image": "logo-192.png" }
   ],
   "systemRequirements": {
     "os": { "label": "OS", "min": "Windows 10 (build 19041+)", "rec": "Windows 11 22H2+" },
@@ -182,15 +186,6 @@
   },
   "pipVideo": {
     "enabled": true,
-    "videoUrl": "https://youtu.be/DJMsXSr1jec",
-    "embedUrl": "https://www.youtube.com/embed/-h-YR-N5BrA?",
-    "thumbnailUrl": "https://i.ytimg.com/vi/-h-YR-N5BrA/maxresdefault.jpg",
-    "title": "Windows 11 WSA Crash Fix | Google Play Store Not Opening Problem Solved",
-    "description": "Are you facing WSA auto close or crash issues on Windows 11? 😱 Don’t worry! In this video, we show the **exact solution to fix WSA and Google Play Store issues**. Watch step by step as we guide you through the process of making WSA fully functional on Windows 11 with Google Play Store support. ✅",
-    "ctaText": "Subscribe For Me For More Video",
-    "ctaButton": "Visit To Channel",
-    "ctaUrl": "https://www.youtube.com/@AT_Tech_Zone?sub_confirmation=1&utm_source=chatgpt.com",
-    "startTime": 1120,
-    "endTime": 11815
+    "videoUrl": "https://youtu.be/-h-YR-N5BrA"
   }
 }
