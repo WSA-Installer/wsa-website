@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, Volume2, VolumeX, X } from "lucide-react";
+import { ExternalLink, Volume2, VolumeX } from "lucide-react";
 import { usePIPConfig } from "@/hooks/useRuntimeConfig";
 
 /* ---- YouTube Iframe API type stubs ---- */
@@ -64,7 +64,6 @@ export default function PIPVideoPlayer() {
 
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isDismissed, setIsDismissed] = useState(false);
   const [isPlayerReady, setIsPlayerReady] = useState(false);
 
   const videoId = useMemo(() => getYouTubeVideoId(pip.videoUrl), [pip.videoUrl]);
@@ -100,7 +99,7 @@ export default function PIPVideoPlayer() {
   };
 
   useEffect(() => {
-    if (!pip.enabled || !videoId || isDismissed) return;
+    if (!pip.enabled || !videoId) return;
 
     let active = true;
 
@@ -180,7 +179,7 @@ export default function PIPVideoPlayer() {
       }
       setIsPlayerReady(false);
     };
-  }, [pip.enabled, videoId, pip.startTime, pip.endTime, isDismissed, startLoopTimer]);
+  }, [pip.enabled, videoId, pip.startTime, pip.endTime, startLoopTimer]);
 
   const toggleMute = () => {
     if (playerRef.current && typeof playerRef.current.isMuted === "function") {
@@ -194,7 +193,7 @@ export default function PIPVideoPlayer() {
     }
   };
 
-  if (!pip.enabled || !videoId || isDismissed) return null;
+  if (!pip.enabled || !videoId) return null;
 
   return (
     <AnimatePresence>
@@ -213,15 +212,6 @@ export default function PIPVideoPlayer() {
             borderColor: "rgba(103, 61, 230, 0.3)",
           }}
         >
-          {/* Close button */}
-          <button
-            onClick={() => setIsDismissed(true)}
-            className="absolute right-3 top-3 z-30 flex h-7 w-7 items-center justify-center rounded-full bg-black/40 text-white/70 backdrop-blur-md transition-colors hover:bg-black/60 hover:text-white"
-            aria-label="Dismiss Player"
-          >
-            <X className="h-4 w-4" />
-          </button>
-
           {/* Video Container */}
           <div className="relative aspect-video w-full overflow-hidden bg-black/80">
             {/* The YT Player Mount Element */}

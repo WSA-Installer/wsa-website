@@ -1,6 +1,6 @@
 "use client";
 
-import { CONTENT } from "@/lib/config";
+import { useContentConfig } from "@/hooks/useRuntimeConfig";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { Code2, Settings, HardDrive, Wrench, Shield, FileCode } from "lucide-react";
 
@@ -14,6 +14,7 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 export default function Documentation() {
+  const CONTENT = useContentConfig();
   return (
     <section id="docs" className="relative border-t border-border py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

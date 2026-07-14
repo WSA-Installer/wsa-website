@@ -1,6 +1,6 @@
 "use client";
 
-import { CONTENT } from "@/lib/config";
+import { useContentConfig } from "@/hooks/useRuntimeConfig";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import TiltCard from "@/components/ui/TiltCard";
 import { AdSlot } from "@/components/ui/AdSlot";
@@ -25,6 +25,7 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 export default function Features() {
+  const CONTENT = useContentConfig();
   return (
     <section id="features" className="relative border-t border-border py-24 md:pl-16 lg:pl-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

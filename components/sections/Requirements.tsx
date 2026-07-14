@@ -1,10 +1,11 @@
 "use client";
 
-import { CONTENT } from "@/lib/config";
+import { useContentConfig } from "@/hooks/useRuntimeConfig";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { CheckCircle2 } from "lucide-react";
 
 export default function Requirements() {
+  const CONTENT = useContentConfig();
   return (
     <section id="requirements" className="relative border-t border-border py-24 md:pl-16 lg:pl-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

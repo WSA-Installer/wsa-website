@@ -1,11 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CONTENT } from "@/lib/config";
+import { useContentConfig } from "@/hooks/useRuntimeConfig";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { Tag } from "lucide-react";
 
 export default function ReleaseNotes() {
+  const CONTENT = useContentConfig();
   return (
     <section id="release-notes" className="relative border-t border-border py-24">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">

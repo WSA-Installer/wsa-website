@@ -1,11 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { SITE, CONTENT, MONETIZATION } from "@/lib/config";
+import { useSiteConfig, useContentConfig, useMonetizationConfig } from "@/hooks/useRuntimeConfig";
 import { AdSlot } from "@/components/ui/AdSlot";
 import { Play, Code2, Coffee, Heart } from "lucide-react";
 
 export default function Footer() {
+  const SITE = useSiteConfig();
+  const CONTENT = useContentConfig();
+  const MONETIZATION = useMonetizationConfig();
   const currentYear = new Date().getFullYear();
 
   return (

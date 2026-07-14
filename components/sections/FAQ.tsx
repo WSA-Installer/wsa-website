@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CONTENT, SITE } from "@/lib/config";
+import { useContentConfig, useSiteConfig } from "@/hooks/useRuntimeConfig";
 import { AdSlot } from "@/components/ui/AdSlot";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { ChevronDown } from "lucide-react";
@@ -51,6 +51,8 @@ function FAQItem({
 }
 
 export default function FAQSection() {
+  const CONTENT = useContentConfig();
+  const SITE = useSiteConfig();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i);
 

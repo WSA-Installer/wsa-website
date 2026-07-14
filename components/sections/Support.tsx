@@ -1,56 +1,59 @@
 "use client";
 
-import { SITE, CONTENT, MONETIZATION } from "@/lib/config";
+import { useSiteConfig, useContentConfig, useMonetizationConfig } from "@/hooks/useRuntimeConfig";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import Button from "@/components/ui/Button";
 import {
   Play, Code2, Coffee, BookOpen, MessageCircle, Bug,
 } from "lucide-react";
 
-const supportItems = [
-  {
-    title: "Video Guide",
-    desc: "Step-by-step tutorial on installing WSA with Google Play Store.",
-    icon: Play,
-    href: SITE.manualGuideUrl,
-    color: "text-red-500",
-    bg: "bg-red-500/10",
-  },
-  {
-    title: "GitHub Repository",
-    desc: "Source code, issues, discussions, and community contributions.",
-    icon: Code2,
-    href: SITE.githubUrl,
-    color: "text-text-primary",
-    bg: "bg-white/5",
-  },
-  {
-    title: "Documentation",
-    desc: "Installation guides, troubleshooting, CLI reference, and architecture docs.",
-    icon: BookOpen,
-    href: SITE.githubUrl + "#documentation",
-    color: "text-primary",
-    bg: "bg-primary/10",
-  },
-  {
-    title: "Report an Issue",
-    desc: "Found a bug? Open a GitHub issue and the community will help.",
-    icon: Bug,
-    href: SITE.githubUrl + "/issues",
-    color: "text-error",
-    bg: "bg-error/10",
-  },
-  {
-    title: "WSA Builds (Upstream)",
-    desc: "MustardChef/WSABuilds — the upstream WSA build project with 17.9K stars.",
-    icon: MessageCircle,
-    href: SITE.wsaBuildsUrl,
-    color: "text-accent",
-    bg: "bg-accent/10",
-  },
-];
-
 export default function Support() {
+  const SITE = useSiteConfig();
+  const CONTENT = useContentConfig();
+  const MONETIZATION = useMonetizationConfig();
+
+  const supportItems = [
+    {
+      title: "Video Guide",
+      desc: "Step-by-step tutorial on installing WSA with Google Play Store.",
+      icon: Play,
+      href: SITE.manualGuideUrl,
+      color: "text-red-500",
+      bg: "bg-red-500/10",
+    },
+    {
+      title: "GitHub Repository",
+      desc: "Source code, issues, discussions, and community contributions.",
+      icon: Code2,
+      href: SITE.githubUrl,
+      color: "text-text-primary",
+      bg: "bg-white/5",
+    },
+    {
+      title: "Documentation",
+      desc: "Installation guides, troubleshooting, CLI reference, and architecture docs.",
+      icon: BookOpen,
+      href: SITE.githubUrl + "#documentation",
+      color: "text-primary",
+      bg: "bg-primary/10",
+    },
+    {
+      title: "Report an Issue",
+      desc: "Found a bug? Open a GitHub issue and the community will help.",
+      icon: Bug,
+      href: SITE.githubUrl + "/issues",
+      color: "text-error",
+      bg: "bg-error/10",
+    },
+    {
+      title: "WSA Builds (Upstream)",
+      desc: "MustardChef/WSABuilds — the upstream WSA build project with 17.9K stars.",
+      icon: MessageCircle,
+      href: SITE.wsaBuildsUrl,
+      color: "text-accent",
+      bg: "bg-accent/10",
+    },
+  ];
   return (
     <section id="support" className="relative border-t border-border py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

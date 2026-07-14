@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { SITE } from "@/lib/config";
+import { useSiteConfig } from "@/hooks/useRuntimeConfig";
 import { useDownloadUrls } from "@/hooks/useRuntimeConfig";
 import Button from "@/components/ui/Button";
 import MagneticButton from "@/components/ui/MagneticButton";
@@ -12,6 +12,7 @@ import { Download, Code2, ChevronDown, Play, Star } from "lucide-react";
 const words = ["Run Android Apps", "Install Play Store", "One Click Away"];
 
 export default function Hero() {
+  const SITE = useSiteConfig();
   const downloads = useDownloadUrls();
   const [wordIndex, setWordIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");

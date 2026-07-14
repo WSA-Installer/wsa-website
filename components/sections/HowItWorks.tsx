@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { CONTENT } from "@/lib/config";
+import { useContentConfig } from "@/hooks/useRuntimeConfig";
 import { AdSlot } from "@/components/ui/AdSlot";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import {
@@ -19,6 +19,7 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 export default function HowItWorks() {
+  const CONTENT = useContentConfig();
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,

@@ -3,11 +3,14 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { SITE, CONTENT, MONETIZATION } from "@/lib/config";
+import { useSiteConfig, useContentConfig, useMonetizationConfig } from "@/hooks/useRuntimeConfig";
 import Button from "@/components/ui/Button";
 import { Download, Menu, X } from "lucide-react";
 
 export default function Navigation() {
+  const SITE = useSiteConfig();
+  const CONTENT = useContentConfig();
+  const MONETIZATION = useMonetizationConfig();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 

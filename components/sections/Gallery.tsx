@@ -3,7 +3,7 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import { CONTENT } from "@/lib/config";
+import { useContentConfig } from "@/hooks/useRuntimeConfig";
 import { Monitor, Cpu, Download, Store, CheckCircle2, FolderOpen, Maximize2, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -35,6 +35,7 @@ const screenshotUrls = [
 ];
 
 export default function Gallery() {
+  const CONTENT = useContentConfig();
   const [activeStep, setActiveStep] = useState(0);
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
 

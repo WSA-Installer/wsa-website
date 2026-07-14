@@ -51,6 +51,42 @@ export function usePIPConfig(): PIPVideoConfig {
   return useConfig().pipVideo;
 }
 
+export function useSiteConfig() {
+  return useConfig().site;
+}
+
+export function useContentConfig() {
+  const c = useConfig();
+  return {
+    downloads: c.downloads,
+    navItems: c.navItems,
+    features: c.features,
+    howItWorks: c.howItWorks,
+    screens: c.screens,
+    systemRequirements: c.systemRequirements,
+    windowsFeatures: c.windowsFeatures,
+    documentation: c.documentation,
+    techStack: c.techStack,
+    faq: c.faq,
+    releases: c.releases,
+    heroStats: c.heroStats,
+  };
+}
+
+export function useMonetizationConfig() {
+  const c = useConfig().monetization;
+  return {
+    provider: c.provider as MonetizationProvider,
+    providerId: c.adSensePublisherId || "",
+    adSensePublisherId: c.adSensePublisherId || "",
+    buyMeACoffee: c.buyMeACoffee,
+    gitHubSponsors: c.gitHubSponsors,
+    koFi: c.koFi,
+    adPlacements: c.adPlacements as AdPlacement[],
+    affiliateLinks: c.affiliateLinks,
+  };
+}
+
 export function useDownloadUrls(): { installer: { url: string; size: string; label: string }; bundle: { url: string; size: string; label: string; sha256: string } } {
   const config = useConfig();
   return {
@@ -66,4 +102,12 @@ export function useDownloadUrls(): { installer: { url: string; size: string; lab
       sha256: config.downloads.bundle.sha256,
     },
   };
+}
+
+type MonetizationProvider = "carbon" | "ethicalads" | "buysellads" | "adsense" | "none";
+interface AdPlacement {
+  slot: string;
+  location: string;
+  format: "native" | "banner" | "sidebar";
+  enabled: boolean;
 }

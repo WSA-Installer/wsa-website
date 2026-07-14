@@ -2,13 +2,14 @@
 
 import { motion } from "framer-motion";
 import { Download as DownloadIcon, Package, Shield, FileText, Hash, Terminal } from "lucide-react";
-import { SITE } from "@/lib/config";
+import { useSiteConfig } from "@/hooks/useRuntimeConfig";
 import { useDownloadUrls } from "@/hooks/useRuntimeConfig";
 import Button from "@/components/ui/Button";
 import MagneticButton from "@/components/ui/MagneticButton";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export default function DownloadSection() {
+  const SITE = useSiteConfig();
   const downloads = useDownloadUrls();
   return (
     <section id="download" className="relative border-t border-border py-24 md:pl-16 lg:pl-24">

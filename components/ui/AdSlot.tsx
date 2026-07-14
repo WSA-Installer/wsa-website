@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { MONETIZATION } from "@/lib/config";
 import { useConfig } from "@/hooks/useRuntimeConfig";
 
 export function GoogleAdSense() {
   const containerRef = useRef<HTMLDivElement>(null);
   const cfg = useConfig();
-  const pubId = cfg.monetization.adSensePublisherId || MONETIZATION.adSensePublisherId;
+  const pubId = cfg.monetization.adSensePublisherId;
 
   useEffect(() => {
     if (!containerRef.current || cfg.monetization.provider !== "adsense") return;
@@ -35,7 +34,7 @@ interface AdSenseAdProps {
 export function AdSenseAd({ slot, format = "auto", className = "" }: AdSenseAdProps) {
   const insRef = useRef<HTMLModElement>(null);
   const cfg = useConfig();
-  const pubId = cfg.monetization.adSensePublisherId || MONETIZATION.adSensePublisherId;
+  const pubId = cfg.monetization.adSensePublisherId;
 
   useEffect(() => {
     try {
@@ -74,7 +73,7 @@ interface AdSlotProps {
 
 export function AdSlot({ slot, className = "" }: AdSlotProps) {
   const cfg = useConfig();
-  const placement = (cfg.monetization.adPlacements || MONETIZATION.adPlacements).find((a) => a.slot === slot);
+  const placement = cfg.monetization.adPlacements.find((a) => a.slot === slot);
   if (!placement?.enabled) return null;
 
   return (
@@ -86,7 +85,7 @@ export function AdSlot({ slot, className = "" }: AdSlotProps) {
         <span className="text-[10px] uppercase tracking-widest text-text-tertiary">
           — Sponsored —
         </span>
-        {(cfg.monetization.provider || MONETIZATION.provider) === "adsense" && (
+        {cfg.monetization.provider === "adsense" && (
           <AdSenseAd slot={slot} format="auto" />
         )}
       </div>
