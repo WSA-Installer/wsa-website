@@ -25,10 +25,8 @@ export default function Navigation() {
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <a href="#" className="flex items-center gap-2 group">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary transition-transform duration-300 group-hover:scale-105">
-            <span className="text-xs font-bold text-white">W</span>
-          </div>
+        <a href="#" className="flex items-center gap-2.5 group">
+          <img src="/images/logo-32.png" alt={SITE.name} className="h-8 w-8 rounded-lg transition-transform duration-300 group-hover:scale-105" />
           <span className="text-sm font-semibold text-text-primary">{SITE.name}</span>
         </a>
 

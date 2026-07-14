@@ -47,6 +47,20 @@ export default function Hero() {
     <section className="relative flex min-h-screen flex-col items-start justify-center overflow-hidden px-4 pb-20 pt-24 md:pl-16 lg:pl-24">
       <div className="pointer-events-none absolute inset-0 z-0">
         <div className="absolute top-1/4 left-1/4 h-96 w-96 animate-gradient rounded-full opacity-[0.08] blur-[150px]" style={{ background: "radial-gradient(circle, #0078d4 0%, transparent 70%)" }} />
+        <motion.img
+          src="/images/logo-192.png"
+          alt=""
+          className="absolute -top-10 -right-10 h-64 w-64 opacity-[0.04] blur-sm"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.img
+          src="/images/logo-192.png"
+          alt=""
+          className="absolute bottom-20 right-[30%] h-32 w-32 opacity-[0.03] blur-sm"
+          animate={{ rotate: -360 }}
+          transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
+        />
       </div>
 
       <div className="relative z-10 w-full md:max-w-[50%] text-left">
