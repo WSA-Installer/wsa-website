@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-import { SITE, SEO } from "@/lib/config";
+import Script from "next/script";
+import { SITE, SEO, MONETIZATION } from "@/lib/config";
 import { softwareSchema } from "@/lib/seo";
 import Navigation from "@/components/sections/Navigation";
 import Footer from "@/components/sections/Footer";
@@ -56,6 +57,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+        />
+        <Script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${MONETIZATION.adSensePublisherId}`}
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
         />
       </head>
       <body className="noise-bg" style={{ cursor: "none" }}>

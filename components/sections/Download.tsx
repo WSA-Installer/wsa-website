@@ -131,6 +131,24 @@ export default function DownloadSection() {
             </div>
           </div>
         </ScrollReveal>
+
+        <ScrollReveal delay={0.35}>
+          <div className="mt-8 w-full md:max-w-[50%] rounded-2xl glass p-6">
+            <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-center">
+              <img
+                src="/images/qr-download.png"
+                alt="Scan to visit WSA Installer"
+                className="h-24 w-24 shrink-0 rounded-xl bg-white/5 p-1"
+              />
+              <div>
+                <p className="text-sm font-medium text-text-primary">Scan to Download</p>
+                <p className="mt-1 text-xs text-text-secondary">
+                  Open on your phone to visit the WSA Installer website and download the setup directly.
+                </p>
+              </div>
+            </div>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );

@@ -46,7 +46,7 @@ export default function Hero() {
   return (
     <section className="relative flex min-h-screen flex-col items-start justify-center overflow-hidden px-4 pb-20 pt-24 md:pl-16 lg:pl-24">
       <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="absolute top-1/4 left-1/4 h-96 w-96 animate-gradient rounded-full opacity-[0.08] blur-[150px]" style={{ background: "radial-gradient(circle, #0078d4 0%, transparent 70%)" }} />
+        <img src="/images/hero-glow.png" alt="" className="absolute inset-0 h-full w-full object-cover opacity-40" />
         <motion.img
           src="/images/logo-192.png"
           alt=""
