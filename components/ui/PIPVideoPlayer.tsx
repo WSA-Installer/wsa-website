@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Volume2, VolumeX } from "lucide-react";
+import { ExternalLink, Volume2, VolumeX } from "lucide-react";
 import { usePIPConfig } from "@/hooks/useRuntimeConfig";
 
 interface YTPlayerEvent {
@@ -45,22 +45,28 @@ function getYouTubeVideoId(url: string): string | null {
   return null;
 }
 
+interface OEmbedData {
+  title: string;
+  author_name: string;
+  author_url: string;
+}
+
 export default function PIPVideoPlayer() {
   const pip = usePIPConfig();
   const playerRef = useRef<YTPlayerInstance | null>(null);
   const [isMuted, setIsMuted] = useState(true);
   const [isPlayerReady, setIsPlayerReady] = useState(false);
-  const [videoTitle, setVideoTitle] = useState("");
+  const [oembed, setOembed] = useState<OEmbedData | null>(null);
 
   const videoId = useMemo(() => getYouTubeVideoId(pip.videoUrl), [pip.videoUrl]);
   const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : "";
 
-  // Fetch video title via oEmbed
+  // Fetch metadata from YouTube oEmbed
   useEffect(() => {
     if (!videoId) return;
     fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`)
       .then((r) => r.json())
-      .then((d) => setVideoTitle(d.title || ""))
+      .then((d) => setOembed({ title: d.title || "", author_name: d.author_name || "", author_url: d.author_url || "" }))
       .catch(() => {});
   }, [videoId]);
 
@@ -148,7 +154,7 @@ export default function PIPVideoPlayer() {
         className="fixed bottom-6 right-6 z-[9999] w-[360px] max-w-[calc(100vw-48px)]"
       >
         <div
-          className="relative overflow-hidden rounded-2xl border backdrop-blur-2xl shadow-2xl"
+          className="relative overflow-hidden rounded-2xl border backdrop-blur-2xl shadow-2xl transition-all duration-300 hover:border-primary/50"
           style={{
             background: "rgba(10, 10, 20, 0.65)",
             borderColor: "rgba(103, 61, 230, 0.3)",
@@ -198,12 +204,35 @@ export default function PIPVideoPlayer() {
             )}
           </div>
 
-          {/* Title */}
-          {videoTitle && (
-            <div className="p-3">
-              <h3 className="text-xs font-medium text-text-secondary line-clamp-1 leading-snug">
-                {videoTitle}
+          {/* Content Info */}
+          {oembed && (
+            <div className="p-4">
+              <h3 className="text-xs font-bold text-text-primary line-clamp-1 uppercase tracking-wide text-primary">
+                {oembed.title}
               </h3>
+              <p className="mt-1 text-xs font-medium text-text-secondary line-clamp-1 leading-snug">
+                {oembed.author_name}
+              </p>
+              {oembed.author_url && (
+                <div className="mt-4 flex items-center gap-3">
+                  <p className="flex-1 text-[10px] leading-relaxed text-text-muted line-clamp-2">
+                    Subscribe to {oembed.author_name} for more WSA tutorials and guides.
+                  </p>
+                  <a
+                    href={oembed.author_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex shrink-0 items-center gap-1.5 rounded-xl px-4 py-2.5 text-xs font-bold text-white transition-transform hover:scale-[1.02] active:scale-[0.98]"
+                    style={{
+                      background: "linear-gradient(135deg, #673de6 0%, #a855f7 100%)",
+                      boxShadow: "0 4px 15px rgba(103, 61, 230, 0.3)",
+                    }}
+                  >
+                    Subscribe
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
+                </div>
+              )}
             </div>
           )}
         </div>
