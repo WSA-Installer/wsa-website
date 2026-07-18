@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useMonetizationConfig } from "@/hooks/useRuntimeConfig";
 
 interface AdFrameProps {
@@ -33,20 +33,26 @@ export default function AdFrame({
 
   const placement = adPlacements.find((p) => p.slot === slot);
 
-  const enabledNetworks = (placement?.networks
-    ? adNetworks
-        .filter((n) => n.enabled && placement.networks?.includes(n.id))
-        .sort((a, b) => a.priority - b.priority)
-    : adNetworks
-        .filter((n) => n.enabled)
-        .sort((a, b) => a.priority - b.priority)
+  const enabledNetworks = useMemo(
+    () =>
+      (placement?.networks
+        ? adNetworks
+            .filter((n) => n.enabled && placement.networks?.includes(n.id))
+            .sort((a, b) => a.priority - b.priority)
+        : adNetworks
+            .filter((n) => n.enabled)
+            .sort((a, b) => a.priority - b.priority)
+      ),
+    [adNetworks, placement]
   );
+
+  const enabledNetworkKey = enabledNetworks.map((n) => n.id).join(",");
 
   useEffect(() => {
     if (enabledNetworks.length === 0) return;
     setSlides(enabledNetworks.map((n) => ({ networkId: n.id, loaded: false, failed: false })));
     setActiveIndex(0);
-  }, [enabledNetworks]);
+  }, [enabledNetworkKey]);
 
   const markLoaded = useCallback((networkId: string) => {
     setSlides((prev) =>
@@ -99,9 +105,7 @@ export default function AdFrame({
 
         setTimeout(() => {
           observer.disconnect();
-          if (!slides[networkIndex]?.loaded) {
-            markFailed(network.id);
-          }
+          markFailed(network.id);
         }, 5000);
       };
 
@@ -153,7 +157,7 @@ export default function AdFrame({
         markFailed(network.id);
       }
     },
-    [enabledNetworks, format, slot, markLoaded, markFailed, slides]
+    [enabledNetworks, format, slot, markLoaded, markFailed]
   );
 
   useEffect(() => {
