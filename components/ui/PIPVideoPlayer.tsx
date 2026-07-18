@@ -145,7 +145,7 @@ export default function PIPVideoPlayer() {
         animate={{ x: 0, opacity: 1, scale: 1 }}
         exit={{ x: 450, opacity: 0, scale: 0.9 }}
         transition={{ type: "spring", damping: 25, stiffness: 260 }}
-        className="fixed bottom-6 right-6 z-[9999] w-[360px] max-w-[calc(100vw-48px)]"
+        className="fixed bottom-6 right-6 z-[9999] w-[360px] max-w-[calc(100vw-48px)] pointer-events-none"
       >
         {/* Ad Frame Slider - Above PIP Player */}
         <div className="mb-2">
@@ -160,7 +160,7 @@ export default function PIPVideoPlayer() {
 
         {/* PIP Video Player */}
         <div
-          className="relative overflow-hidden rounded-2xl border backdrop-blur-2xl shadow-2xl transition-all duration-300 hover:border-accent-primary/50"
+          className="relative overflow-hidden rounded-2xl border backdrop-blur-2xl shadow-2xl transition-all duration-300 hover:border-accent-primary/50 pointer-events-auto"
           style={{
             background: "rgba(10, 10, 20, 0.65)",
             borderColor: "rgba(var(--theme-glow-rgb), 0.3)",
