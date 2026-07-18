@@ -66,12 +66,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
         />
-        <Script
-          async
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${MONETIZATION.adSensePublisherId}`}
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem("wsa-installer-theme");var r=t;if(!t||t==="system"){r=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.dataset.theme=r}catch(e){document.documentElement.dataset.theme="dark"}})();`,
@@ -79,6 +73,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="min-h-screen flex flex-col">
+        <Script
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${MONETIZATION.adSensePublisherId}`}
+          strategy="afterInteractive"
+        />
         <ThemeProvider>
           <ConfigProvider>
             <ScrollProgress />
