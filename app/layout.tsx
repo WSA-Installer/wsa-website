@@ -1,19 +1,27 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Outfit, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
 import { SITE, SEO, MONETIZATION } from "@/lib/config";
 import { softwareSchema } from "@/lib/seo";
 import Navigation from "@/components/sections/Navigation";
-import Footer from "@/components/sections/Footer";
-import CursorFollower from "@/components/ui/CursorFollower";
-import PIPVideoPlayer from "@/components/ui/PIPVideoPlayer";
 import { ConfigProvider } from "@/hooks/useRuntimeConfig";
+import { ThemeProvider } from "@/hooks/useTheme";
+import ScrollProgress from "@/components/ui/ScrollProgress";
+import PIPVideoPlayer from "@/components/ui/PIPVideoPlayer";
+import FooterAd from "@/components/ui/FooterAd";
+import Footer from "@/components/sections/Footer";
 import "./globals.css";
 
-const inter = Inter({
+const outfit = Outfit({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-outfit",
+});
+
+const jetbrains = JetBrains_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-jetbrains",
 });
 
 export const metadata: Metadata = {
@@ -52,7 +60,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${outfit.variable} ${jetbrains.variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
@@ -64,15 +72,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("wsa-installer-theme");var r=t;if(!t||t==="system"){r=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.dataset.theme=r}catch(e){document.documentElement.dataset.theme="dark"}})();`,
+          }}
+        />
       </head>
-      <body className="noise-bg" style={{ cursor: "none" }}>
-        <ConfigProvider>
-          <CursorFollower />
-          <Navigation />
-          <main>{children}</main>
-          <Footer />
-          <PIPVideoPlayer />
-        </ConfigProvider>
+      <body className="min-h-screen flex flex-col">
+        <ThemeProvider>
+          <ConfigProvider>
+            <ScrollProgress />
+            <Navigation />
+            <main className="flex-1" style={{ marginRight: "380px" }}>{children}</main>
+            <div style={{ marginRight: "380px" }}>
+              <FooterAd />
+              <Footer />
+            </div>
+            <PIPVideoPlayer />
+          </ConfigProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

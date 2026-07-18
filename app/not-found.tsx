@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-4">
       <div className="text-center">
-        <div className="mb-8 inline-flex items-center gap-2 rounded-full glass px-4 py-1.5">
+        <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-bg-card px-4 py-1.5">
           <span className="h-2 w-2 rounded-full bg-error" />
           <span className="text-xs text-text-secondary">404 — Page not found</span>
         </div>
@@ -15,7 +15,7 @@ export default function NotFound() {
         </p>
         <Link
           href="/"
-          className="mt-10 inline-flex items-center gap-2 rounded-xl bg-primary px-8 py-4 text-base font-medium text-white transition-all duration-300 hover:bg-primary-hover glow"
+          className="mt-10 inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-4 text-base font-medium text-white transition-colors hover:bg-primary-hover"
         >
           Back to {SITE.name}
         </Link>

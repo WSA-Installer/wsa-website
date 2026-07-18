@@ -41,12 +41,19 @@
     }
   },
   "navItems": [
-    { "label": "Features", "href": "#features" },
-    { "label": "How It Works", "href": "#how-it-works" },
-    { "label": "Requirements", "href": "#requirements" },
-    { "label": "Download", "href": "#download" },
-    { "label": "FAQ", "href": "#faq" }
+    { "label": "Home", "href": "/" },
+    { "label": "Features", "href": "/features" },
+    { "label": "Gallery", "href": "/gallery" },
+    { "label": "Downloads", "href": "/downloads" },
+    { "label": "Docs", "href": "/docs" },
+    { "label": "Releases", "href": "/releases" },
+    { "label": "Blog", "href": "/blog" },
+    { "label": "About", "href": "/about" }
   ],
+  "gallery": {
+    "title": "Screenshots",
+    "description": "Browse through the WSA Installer interface — from the welcome screen to Play Store patching and file sharing."
+  },
   "features": [
     { "title": "Smart System Scan", "desc": "Detects VT-x, Hyper-V, VirtualMachinePlatform, HypervisorPlatform, and WSL in real-time using 5 different detection methods including CPUID, wmic, systeminfo, PowerShell, and registry.", "icon": "Cpu", "gradient": "from-blue-500/20 to-cyan-500/20" },
     { "title": "Auto Configuration", "desc": "Enables all required Windows features automatically with administrator privileges. No manual BIOS changes or Windows Feature dialog hunting needed.", "icon": "Settings2", "gradient": "from-purple-500/20 to-pink-500/20" },
@@ -156,6 +163,42 @@
   "monetization": {
     "provider": "adsense",
     "adSensePublisherId": "ca-pub-7315130185108046",
+    "adNetworks": [
+      {
+        "id": "adsense",
+        "name": "Google AdSense",
+        "enabled": true,
+        "publisherId": "ca-pub-7315130185108046",
+        "type": "adsense",
+        "priority": 1
+      },
+      {
+        "id": "monetag",
+        "name": "Monetag",
+        "enabled": false,
+        "publisherId": "",
+        "type": "monetag",
+        "priority": 2
+      },
+      {
+        "id": "adsterra",
+        "name": "Adsterra",
+        "enabled": false,
+        "publisherId": "",
+        "type": "adsterra",
+        "priority": 3
+      }
+    ],
+    "adPlacements": [
+      { "slot": "hero-banner", "location": "Below hero section", "format": "banner", "enabled": true, "networks": ["adsense", "monetag", "adsterra"] },
+      { "slot": "after-features", "location": "Between Features and HowItWorks", "format": "native", "enabled": true, "networks": ["adsense", "monetag"] },
+      { "slot": "sidebar-gallery", "location": "Sidebar on gallery", "format": "sidebar", "enabled": true, "networks": ["adsense", "monetag"] },
+      { "slot": "after-faq", "location": "After FAQ section", "format": "banner", "enabled": true, "networks": ["adsense", "monetag"] },
+      { "slot": "footer", "location": "Footer area", "format": "banner", "enabled": true, "networks": ["adsense", "monetag"] },
+      { "slot": "pip-top", "location": "Above PIP video player", "format": "banner", "enabled": true, "networks": ["adsense", "monetag", "adsterra"] },
+      { "slot": "after-blog", "location": "After blog list", "format": "banner", "enabled": true, "networks": ["adsense", "monetag"] },
+      { "slot": "after-blog-post", "location": "After blog post body", "format": "banner", "enabled": true, "networks": ["adsense", "monetag"] }
+    ],
     "buyMeACoffee": {
       "enabled": true,
       "url": "https://buymeacoffee.com/mrcyberdev",
@@ -169,13 +212,6 @@
       "enabled": false,
       "url": ""
     },
-    "adPlacements": [
-      { "slot": "after-features", "location": "Between Features and HowItWorks", "format": "native", "enabled": true },
-      { "slot": "after-how-it-works", "location": "Between HowItWorks and Gallery", "format": "native", "enabled": true },
-      { "slot": "after-faq", "location": "After FAQ section", "format": "banner", "enabled": true },
-      { "slot": "sidebar-docs", "location": "Sidebar on documentation", "format": "sidebar", "enabled": true },
-      { "slot": "footer", "location": "Footer area", "format": "banner", "enabled": true }
-    ],
     "affiliateLinks": {
       "enabled": true,
       "links": [
@@ -191,5 +227,9 @@
     "ctaText": "Subscribe for more WSA tutorials and guides.",
     "ctaButton": "Subscribe",
     "ctaUrl": "https://www.youtube.com/@AT_Tech_Zone?sub_confirmation=1"
-  }
+  },
+  "social": [
+    { "name": "YouTube", "url": "https://www.youtube.com/@AT_Tech_Zone" },
+    { "name": "GitHub", "url": "https://github.com/WSA-Installer/wsa-website" }
+  ]
 }

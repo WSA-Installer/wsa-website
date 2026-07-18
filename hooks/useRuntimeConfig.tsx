@@ -4,7 +4,6 @@ import { createContext, useContext, useState, useEffect, type ReactNode } from "
 import buildTimeConfig from "@/config.json";
 
 export type Config = typeof buildTimeConfig;
-export type PIPVideoConfig = Config["pipVideo"];
 
 const CONFIG_URL = "https://raw.githubusercontent.com/WSA-Installer/wsa-website/master/config.json";
 const POLL_INTERVAL = 60_000;
@@ -47,10 +46,6 @@ export function useConfig(): Config {
   return useContext(ConfigContext);
 }
 
-export function usePIPConfig(): PIPVideoConfig {
-  return useConfig().pipVideo;
-}
-
 export function useSiteConfig() {
   return useConfig().site;
 }
@@ -70,6 +65,8 @@ export function useContentConfig() {
     faq: c.faq,
     releases: c.releases,
     heroStats: c.heroStats,
+    gallery: c.gallery,
+    social: c.social,
   };
 }
 
@@ -79,6 +76,7 @@ export function useMonetizationConfig() {
     provider: c.provider as MonetizationProvider,
     providerId: c.adSensePublisherId || "",
     adSensePublisherId: c.adSensePublisherId || "",
+    adNetworks: (c.adNetworks || []) as AdNetwork[],
     buyMeACoffee: c.buyMeACoffee,
     gitHubSponsors: c.gitHubSponsors,
     koFi: c.koFi,
@@ -105,9 +103,32 @@ export function useDownloadUrls(): { installer: { url: string; size: string; lab
 }
 
 type MonetizationProvider = "carbon" | "ethicalads" | "buysellads" | "adsense" | "none";
+
+interface AdNetwork {
+  id: string;
+  name: string;
+  enabled: boolean;
+  publisherId: string;
+  type: string;
+  priority: number;
+}
+
 interface AdPlacement {
   slot: string;
   location: string;
   format: "native" | "banner" | "sidebar";
   enabled: boolean;
+  networks?: string[];
+}
+
+export function usePIPConfig() {
+  const c = useConfig().pipVideo;
+  return {
+    enabled: c?.enabled ?? false,
+    videoUrl: c?.videoUrl ?? "",
+    description: c?.description ?? "",
+    ctaText: c?.ctaText ?? "",
+    ctaButton: c?.ctaButton ?? "",
+    ctaUrl: c?.ctaUrl ?? "",
+  };
 }

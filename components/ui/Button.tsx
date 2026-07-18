@@ -16,7 +16,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       "inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-300 active:scale-[0.97] cursor-pointer select-none";
     const variants = {
       primary:
-        "bg-primary text-white hover:bg-primary-hover glow hover:shadow-[0_0_30px_rgba(0,120,212,0.3)]",
+        "bg-primary text-bg hover:bg-primary-hover glow hover:shadow-glow",
       secondary:
         "glass text-text-primary hover:glass-hover hover:border-border-hover",
       ghost: "text-text-secondary hover:text-text-primary hover:bg-white/5",

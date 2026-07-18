@@ -12,4 +12,6 @@ export const CONTENT = {
   faq: config.faq,
   releases: config.releases,
   heroStats: config.heroStats,
+  gallery: config.gallery,
+  social: config.social,
 };
