@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit, JetBrains_Mono } from "next/font/google";
-import Script from "next/script";
 import { SITE, SEO, MONETIZATION } from "@/lib/config";
 import { softwareSchema } from "@/lib/seo";
 import Navigation from "@/components/sections/Navigation";
@@ -73,9 +72,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="min-h-screen flex flex-col">
-        <Script
+        <script
+          async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${MONETIZATION.adSensePublisherId}`}
-          strategy="afterInteractive"
+          crossOrigin="anonymous"
         />
         <ThemeProvider>
           <ConfigProvider>
