@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useContentConfig, useSiteConfig } from "@/hooks/useRuntimeConfig";
+import { useContentConfig, useSiteConfig, usePIPConfig } from "@/hooks/useRuntimeConfig";
 import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import AdFrame from "@/components/ui/AdFrame";
+import VideoAdPlayer from "@/components/ui/VideoAdPlayer";
 
 interface GalleryImage {
   src: string;
@@ -17,6 +18,7 @@ const categories = ["All", "Welcome", "System", "Install", "PlayStore", "Brandin
 export default function GalleryPage() {
   const CONTENT = useContentConfig();
   const SITE = useSiteConfig();
+  const pip = usePIPConfig();
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("All");
@@ -80,12 +82,10 @@ export default function GalleryPage() {
           </div>
           <div className="max-w-4xl mx-auto">
             <div className="relative aspect-video rounded-xl overflow-hidden border border-border-primary shadow-2xl">
-              <iframe
-                src="https://www.youtube-nocookie.com/embed/-h-YR-N5BrA"
+              <VideoAdPlayer
+                videoUrl={pip.videoUrl}
                 title="WSA Installer - Installation Guide"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="absolute inset-0 w-full h-full"
+                className="absolute inset-0"
               />
             </div>
           </div>

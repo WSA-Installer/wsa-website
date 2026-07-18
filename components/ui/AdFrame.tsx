@@ -17,6 +17,10 @@ interface AdSlide {
   failed: boolean;
 }
 
+interface AdsbygoogleWindow {
+  adsbygoogle?: Array<Record<string, unknown>>;
+}
+
 export default function AdFrame({
   slot,
   className = "",
@@ -25,31 +29,31 @@ export default function AdFrame({
   rotateInterval = 15000,
 }: AdFrameProps) {
   const { adNetworks, adPlacements } = useMonetizationConfig();
-  const [slides, setSlides] = useState<AdSlide[]>([]);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const containerRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const rotateTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const loadTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const placement = adPlacements.find((p) => p.slot === slot);
 
   const enabledNetworks = useMemo(
     () =>
-      (placement?.networks
+      placement?.networks
         ? adNetworks
             .filter((n) => n.enabled && placement.networks?.includes(n.id))
             .sort((a, b) => a.priority - b.priority)
         : adNetworks
             .filter((n) => n.enabled)
-            .sort((a, b) => a.priority - b.priority)
-      ),
+            .sort((a, b) => a.priority - b.priority),
     [adNetworks, placement]
   );
 
   const enabledNetworkKey = enabledNetworks.map((n) => n.id).join(",");
+  const [slides, setSlides] = useState<AdSlide[]>(() =>
+    enabledNetworks.map((n) => ({ networkId: n.id, loaded: false, failed: false }))
+  );
+  const [activeIndex, setActiveIndex] = useState(0);
+  const containerRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const rotateTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const loadTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    if (enabledNetworks.length === 0) return;
     setSlides(enabledNetworks.map((n) => ({ networkId: n.id, loaded: false, failed: false })));
     setActiveIndex(0);
   }, [enabledNetworkKey]);
@@ -85,80 +89,6 @@ export default function AdFrame({
       if (rotateTimerRef.current) clearInterval(rotateTimerRef.current);
     };
   }, [rotate, rotateInterval, slides]);
-
-  const loadAd = useCallback(
-    (networkIndex: number, container: HTMLDivElement) => {
-      const network = enabledNetworks[networkIndex];
-      if (!network) return;
-
-      container.innerHTML = "";
-
-      const detectAdLoad = (targetEl: Element) => {
-        const observer = new MutationObserver(() => {
-          const hasAd = targetEl.querySelector("iframe, ins.adsbygoogle, script[src]");
-          if (hasAd) {
-            markLoaded(network.id);
-            observer.disconnect();
-          }
-        });
-        observer.observe(targetEl, { childList: true, subtree: true });
-
-        setTimeout(() => {
-          observer.disconnect();
-          markFailed(network.id);
-        }, 5000);
-      };
-
-      if (network.type === "adsense" && network.publisherId) {
-        try {
-          const ins = document.createElement("ins");
-          ins.className = "adsbygoogle";
-          ins.style.display = "block";
-          ins.style.width = "100%";
-          if (format === "sidebar") ins.style.height = "600px";
-          else if (format === "native") {
-            ins.setAttribute("data-ad-format", "fluid");
-            ins.setAttribute("data-ad-layout", "in-article");
-          } else ins.style.height = "90px";
-          ins.setAttribute("data-ad-client", network.publisherId);
-          ins.setAttribute("data-ad-slot", slot);
-          container.appendChild(ins);
-          try {
-            (window as any).adsbygoogle = (window as any).adsbygoogle || [];
-            (window as any).adsbygoogle.push({});
-          } catch {}
-          detectAdLoad(ins);
-        } catch {
-          markFailed(network.id);
-        }
-      } else if (network.type === "monetag" && network.publisherId) {
-        try {
-          const script = document.createElement("script");
-          script.src = `//viblast.com/${network.publisherId}/invoke.js`;
-          script.async = true;
-          script.onload = () => markLoaded(network.id);
-          script.onerror = () => markFailed(network.id);
-          container.appendChild(script);
-        } catch {
-          markFailed(network.id);
-        }
-      } else if (network.type === "adsterra" && network.publisherId) {
-        try {
-          const script = document.createElement("script");
-          script.src = `//pl${network.publisherId}.adsterra.com/${network.publisherId}.js`;
-          script.async = true;
-          script.onload = () => markLoaded(network.id);
-          script.onerror = () => markFailed(network.id);
-          container.appendChild(script);
-        } catch {
-          markFailed(network.id);
-        }
-      } else {
-        markFailed(network.id);
-      }
-    },
-    [enabledNetworks, format, slot, markLoaded, markFailed]
-  );
 
   useEffect(() => {
     if (rotate) return;
@@ -220,9 +150,13 @@ export default function AdFrame({
           ins.setAttribute("data-ad-slot", slot);
           container.appendChild(ins);
           try {
-            (window as any).adsbygoogle = (window as any).adsbygoogle || [];
-            (window as any).adsbygoogle.push({});
-          } catch {}
+            if (!ins.getAttribute("data-ad-status")) {
+              const win = window as unknown as AdsbygoogleWindow;
+              win.adsbygoogle = win.adsbygoogle || [];
+              win.adsbygoogle.push({});
+              ins.setAttribute("data-ad-status", "pushed");
+            }
+          } catch { /* ignore */ }
           detectAdLoad(ins);
         } catch {
           clearTimeout(timeout);
@@ -292,23 +226,18 @@ export default function AdFrame({
         : "min-h-[60px]";
 
   const hasLoadedAd = slides.some((s) => s.loaded);
-  const loadedCount = slides.filter((s) => !s.failed).length;
-  const anyFailed = slides.length > 0 && slides.every((s) => s.failed);
 
   const frameContent = (
     <>
-      {/* Corner accents */}
       <div className="absolute -top-px -left-px w-4 h-4 border-t-2 border-l-2 border-accent-primary/60 rounded-tl-lg" />
       <div className="absolute -bottom-px -right-px w-4 h-4 border-b-2 border-r-2 border-accent-primary/60 rounded-br-lg" />
 
-      {/* Ad label */}
       <div className="absolute top-2 right-2 z-10">
         <span className="text-[9px] font-mono text-text-muted/50 uppercase tracking-wider">
           Ad
         </span>
       </div>
 
-      {/* Ad containers */}
       {rotate ? (
         enabledNetworks.map((network, i) => (
           <div
@@ -323,7 +252,6 @@ export default function AdFrame({
         <div ref={(el) => { containerRefs.current[0] = el; }} className="w-full h-full" />
       )}
 
-      {/* Placeholder when no ad loaded */}
       {!hasLoadedAd && (
         <div className="absolute inset-0 flex items-center justify-center z-[2]">
           <div className="flex flex-col items-center gap-1.5 opacity-40">
@@ -335,8 +263,7 @@ export default function AdFrame({
         </div>
       )}
 
-      {/* Dot indicators */}
-      {rotate && loadedCount > 1 && (
+      {rotate && slides.length > 1 && (
         <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1.5">
           {slides.map((slide, i) => (
             <button

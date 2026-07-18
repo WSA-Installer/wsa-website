@@ -9,6 +9,7 @@ import ScrollProgress from "@/components/ui/ScrollProgress";
 import PIPVideoPlayer from "@/components/ui/PIPVideoPlayer";
 import FooterAd from "@/components/ui/FooterAd";
 import Footer from "@/components/sections/Footer";
+import NavigationAdController from "@/components/ui/NavigationAdController";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -87,6 +88,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Footer />
             </div>
             <PIPVideoPlayer />
+            <NavigationAdController />
           </ConfigProvider>
         </ThemeProvider>
       </body>

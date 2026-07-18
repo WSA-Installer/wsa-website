@@ -3,9 +3,9 @@
 import { useSiteConfig, useDownloadUrls, useContentConfig, usePIPConfig } from "@/hooks/useRuntimeConfig";
 import { Download, Code2, Cpu, Settings2, Zap, Store, Shield, Terminal } from "lucide-react";
 import Link from "next/link";
-import { useMemo } from "react";
 import AdFrame from "@/components/ui/AdFrame";
 import Typewriter from "@/components/ui/Typewriter";
+import VideoAdPlayer from "@/components/ui/VideoAdPlayer";
 
 const featureIcons = [Cpu, Settings2, Zap, Store, Shield, Terminal];
 
@@ -22,27 +22,11 @@ const typewriterPhrases = [
   "Zero-Trust Security",
 ];
 
-function getYouTubeVideoId(url: string): string | null {
-  const patterns = [
-    /(?:youtube\.com\/watch\?v=)([\w-]+)/,
-    /(?:youtu\.be\/)([\w-]+)/,
-    /(?:youtube-nocookie\.com\/embed\/)([\w-]+)/,
-    /(?:youtube\.com\/embed\/)([\w-]+)/,
-  ];
-  for (const p of patterns) {
-    const m = url.match(p);
-    if (m) return m[1];
-  }
-  return null;
-}
-
 export default function HomePage() {
   const SITE = useSiteConfig();
   const CONTENT = useContentConfig();
   const downloads = useDownloadUrls();
   const pip = usePIPConfig();
-
-  const videoId = useMemo(() => getYouTubeVideoId(pip.videoUrl), [pip.videoUrl]);
 
   return (
     <>
@@ -56,9 +40,9 @@ export default function HomePage() {
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-[4fr_8fr] gap-8 items-center">
             <div className="text-center lg:text-left animate-slide-in-left">
-              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-text-primary leading-tight">
+              <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-text-primary leading-tight flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 WSA <span className="text-accent-primary">Installer</span>
-                <span className="inline-flex items-center rounded-full font-mono tracking-wider bg-accent-primary/10 text-accent-primary border border-accent-primary/20 ml-4 text-[10px] font-bold px-2 py-0.5 align-middle">
+                <span className="inline-flex items-center rounded-full font-mono tracking-wider bg-accent-primary/10 text-accent-primary border border-accent-primary/20 text-[10px] font-bold px-2 py-0.5 align-middle shrink-0">
                   v{SITE.version}
                 </span>
               </h1>
@@ -102,19 +86,11 @@ export default function HomePage() {
             <div className="relative animate-slide-in-right">
               <div className="relative rounded-xl overflow-hidden border border-border-primary shadow-2xl box-glow">
                 <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                  {videoId ? (
-                    <iframe
-                      src={`https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1`}
-                      title="WSA Installer Demo"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="absolute inset-0 w-full h-full"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center bg-bg-secondary text-text-muted">
-                      No video configured
-                    </div>
-                  )}
+                  <VideoAdPlayer
+                    videoUrl={pip.videoUrl}
+                    title="WSA Installer Demo"
+                    className="absolute inset-0"
+                  />
                 </div>
               </div>
               <div className="absolute -top-2 -left-2 w-8 h-8 border-t-2 border-l-2 border-accent-primary/50 rounded-tl-lg" />

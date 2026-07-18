@@ -218,6 +218,19 @@
         { "name": "NordVPN", "url": "https://nordvpn.com/", "description": "Secure your WSA browsing" },
         { "name": "DigitalOcean", "url": "https://digitalocean.com/", "description": "Cloud hosting for WSA development" }
       ]
+    },
+    "videoAds": {
+      "enabled": true,
+      "vastTag": "",
+      "adCount": 4,
+      "nonSkippable": true
+    },
+    "navigationAd": {
+      "enabled": true,
+      "network": "adsense",
+      "showEvery": 3,
+      "duration": 5,
+      "skipAfter": 3
     }
   },
   "pipVideo": {

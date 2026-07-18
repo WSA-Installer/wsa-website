@@ -1,24 +1,15 @@
 "use client";
 
-import { useContentConfig, useSiteConfig } from "@/hooks/useRuntimeConfig";
+import { useContentConfig, useSiteConfig, usePIPConfig } from "@/hooks/useRuntimeConfig";
 import Link from "next/link";
 import { FileCode, Settings, HardDrive, Wrench, Shield, Code2, BookOpen, AlertTriangle, FileText } from "lucide-react";
 import AdFrame from "@/components/ui/AdFrame";
-import { usePIPConfig } from "@/hooks/useRuntimeConfig";
-import { useMemo } from "react";
+import VideoAdPlayer from "@/components/ui/VideoAdPlayer";
 
 export default function DocsPage() {
   const CONTENT = useContentConfig();
   const SITE = useSiteConfig();
-
   const pip = usePIPConfig();
-  const videoId = useMemo(() => {
-    const url = pip.videoUrl;
-    if (!url) return null;
-    const patterns = [/(?:youtube\.com\/watch\?v=)([\w-]+)/, /(?:youtu\.be\/)([\w-]+)/, /(?:youtube\.com\/embed\/)([\w-]+)/];
-    for (const p of patterns) { const m = url.match(p); if (m) return m[1]; }
-    return null;
-  }, [pip.videoUrl]);
 
   return (
     <>
@@ -48,12 +39,16 @@ export default function DocsPage() {
         </div>
       </section>
 
-      {videoId && (
+      {pip.videoUrl && (
         <section className="py-6">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
               <div className="relative aspect-video rounded-xl overflow-hidden border border-border-primary shadow-2xl">
-                <iframe src={`https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1`} title="WSA Installer Demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="absolute inset-0 w-full h-full" />
+                <VideoAdPlayer
+                  videoUrl={pip.videoUrl}
+                  title="WSA Installer Demo"
+                  className="absolute inset-0"
+                />
               </div>
             </div>
           </div>

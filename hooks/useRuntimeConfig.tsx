@@ -132,3 +132,54 @@ export function usePIPConfig() {
     ctaUrl: c?.ctaUrl ?? "",
   };
 }
+
+export interface VideoAdsConfig {
+  enabled: boolean;
+  vastTag: string;
+  adCount: number;
+  nonSkippable: boolean;
+}
+
+export interface NavigationAdConfig {
+  enabled: boolean;
+  network: string;
+  showEvery: number;
+  duration: number;
+  skipAfter: number;
+}
+
+interface MonetizationConfig {
+  provider: string;
+  adSensePublisherId: string;
+  adNetworks: AdNetwork[];
+  adPlacements: AdPlacement[];
+  buyMeACoffee: { enabled: boolean; url: string; username: string };
+  gitHubSponsors: { enabled: boolean; url: string };
+  koFi: { enabled: boolean; url: string };
+  affiliateLinks: { enabled: boolean; links: { name: string; url: string; description: string }[] };
+  videoAds: { enabled: boolean; vastTag: string; adCount: number; nonSkippable: boolean };
+  navigationAd: { enabled: boolean; network: string; showEvery: number; duration: number; skipAfter: number };
+}
+
+export function useVideoAdsConfig(): VideoAdsConfig {
+  const c = useConfig().monetization as MonetizationConfig;
+  const v = c.videoAds;
+  return {
+    enabled: v?.enabled ?? false,
+    vastTag: v?.vastTag ?? "",
+    adCount: v?.adCount ?? 4,
+    nonSkippable: v?.nonSkippable ?? true,
+  };
+}
+
+export function useNavigationAdConfig(): NavigationAdConfig {
+  const c = useConfig().monetization as MonetizationConfig;
+  const n = c.navigationAd;
+  return {
+    enabled: n?.enabled ?? false,
+    network: n?.network ?? "adsense",
+    showEvery: n?.showEvery ?? 3,
+    duration: n?.duration ?? 5,
+    skipAfter: n?.skipAfter ?? 3,
+  };
+}

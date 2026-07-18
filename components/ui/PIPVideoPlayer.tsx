@@ -3,55 +3,23 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Volume2, VolumeX } from "lucide-react";
-import { usePIPConfig } from "@/hooks/useRuntimeConfig";
+import { usePIPConfig, useVideoAdsConfig } from "@/hooks/useRuntimeConfig";
 import AdFrame from "@/components/ui/AdFrame";
-
-interface YTPlayerEvent {
-  target: YTPlayerInstance;
-  data: number;
-}
-
-interface YTPlayerInstance {
-  playVideo: () => void;
-  pauseVideo: () => void;
-  mute: () => void;
-  unMute: () => void;
-  isMuted: () => boolean;
-  destroy: () => void;
-}
-
-interface YTStatic {
-  Player: new (elementId: string, config: Record<string, unknown>) => YTPlayerInstance;
-  PlayerState: { PLAYING: number; PAUSED: number; ENDED: number; BUFFERING: number };
-}
-
-declare global {
-  interface Window {
-    YT: YTStatic;
-    onYouTubeIframeAPIReady: (() => void) | undefined;
-  }
-}
-
-function getYouTubeVideoId(url: string): string | null {
-  const patterns = [
-    /(?:youtube\.com\/watch\?v=)([\w-]+)/,
-    /(?:youtu\.be\/)([\w-]+)/,
-    /(?:youtube-nocookie\.com\/embed\/)([\w-]+)/,
-    /(?:youtube\.com\/embed\/)([\w-]+)/,
-  ];
-  for (const p of patterns) {
-    const m = url.match(p);
-    if (m) return m[1];
-  }
-  return null;
-}
+import VideoAdOverlay from "@/components/ui/VideoAdOverlay";
+import type { YTPlayerEvent, YTPlayerInstance } from "@/lib/types/youtube";
+import "@/lib/types/youtube";
+import { getYouTubeVideoId } from "@/lib/utils/youtube";
 
 export default function PIPVideoPlayer() {
   const pip = usePIPConfig();
+  const videoAds = useVideoAdsConfig();
   const playerRef = useRef<YTPlayerInstance | null>(null);
   const [isMuted, setIsMuted] = useState(true);
   const [isPlayerReady, setIsPlayerReady] = useState(false);
   const [videoTitle, setVideoTitle] = useState("");
+  const [pipPlaying, setPipPlaying] = useState(false);
+  const [pipCurrentTime, setPipCurrentTime] = useState(0);
+  const [pipDuration, setPipDuration] = useState(0);
 
   const videoId = useMemo(() => getYouTubeVideoId(pip.videoUrl), [pip.videoUrl]);
   const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : "";
@@ -69,7 +37,7 @@ export default function PIPVideoPlayer() {
     let active = true;
 
     const initPlayer = () => {
-      if (!active) return;
+      if (!active || !window.YT?.Player) return;
       try {
         playerRef.current = new window.YT.Player("pip-youtube-player", {
           height: "100%",
@@ -92,6 +60,13 @@ export default function PIPVideoPlayer() {
               event.target.mute();
               event.target.playVideo();
               setIsPlayerReady(true);
+              setPipDuration(event.target.getDuration());
+            },
+            onStateChange: (event: YTPlayerEvent) => {
+              if (!active) return;
+              const playing = event.target.getPlayerState() === window.YT!.PlayerState.PLAYING;
+              setPipPlaying(playing);
+              if (playing) setPipDuration(event.target.getDuration());
             },
           },
         });
@@ -123,6 +98,17 @@ export default function PIPVideoPlayer() {
       setIsPlayerReady(false);
     };
   }, [pip.enabled, videoId]);
+
+  useEffect(() => {
+    if (!isPlayerReady || !playerRef.current) return;
+    const interval = setInterval(() => {
+      try {
+        const ct = playerRef.current?.getCurrentTime();
+        if (ct !== undefined) setPipCurrentTime(ct);
+      } catch { /* ignore */ }
+    }, 500);
+    return () => clearInterval(interval);
+  }, [isPlayerReady]);
 
   const toggleMute = () => {
     if (playerRef.current && typeof playerRef.current.isMuted === "function") {
@@ -203,6 +189,23 @@ export default function PIPVideoPlayer() {
                 </span>
                 Looping
               </div>
+            )}
+
+            {videoAds.enabled && videoAds.vastTag && (
+              <VideoAdOverlay
+                vastTag={videoAds.vastTag}
+                adCount={videoAds.adCount}
+                nonSkippable={videoAds.nonSkippable}
+                videoDuration={pipDuration}
+                currentTime={pipCurrentTime}
+                isPlaying={pipPlaying}
+                onAdStart={() => {
+                  try { playerRef.current?.pauseVideo(); } catch { /* ignore */ }
+                }}
+                onAdEnd={() => {
+                  try { playerRef.current?.playVideo(); } catch { /* ignore */ }
+                }}
+              />
             )}
           </div>
 
