@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 import { SITE, SEO, MONETIZATION } from "@/lib/config";
 import { softwareSchema } from "@/lib/seo";
 import Navigation from "@/components/sections/Navigation";
@@ -89,6 +90,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <PIPVideoPlayer />
           </ConfigProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
