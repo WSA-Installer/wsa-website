@@ -119,6 +119,7 @@ interface AdPlacement {
   format: "native" | "banner" | "sidebar";
   enabled: boolean;
   networks?: string[];
+  adSenseSlot?: string;
 }
 
 export function usePIPConfig() {

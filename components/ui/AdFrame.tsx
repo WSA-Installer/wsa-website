@@ -140,14 +140,26 @@ export default function AdFrame({
           const ins = document.createElement("ins");
           ins.className = "adsbygoogle";
           ins.style.display = "block";
-          ins.style.width = "100%";
-          if (format === "sidebar") ins.style.height = "600px";
-          else if (format === "native") {
+          if (format === "sidebar") {
+            ins.style.width = "100%";
+            ins.style.height = "600px";
+          } else if (format === "native") {
+            ins.style.width = "100%";
             ins.setAttribute("data-ad-format", "fluid");
             ins.setAttribute("data-ad-layout", "in-article");
-          } else ins.style.height = "90px";
+            ins.style.textAlign = "center";
+          } else if (slot === "pip-top") {
+            ins.style.display = "block";
+            ins.style.width = "100%";
+            ins.setAttribute("data-ad-format", "auto");
+            ins.setAttribute("data-full-width-responsive", "true");
+          } else {
+            ins.style.display = "block";
+            ins.style.width = "100%";
+            ins.style.height = "90px";
+          }
           ins.setAttribute("data-ad-client", network.publisherId);
-          ins.setAttribute("data-ad-slot", slot);
+          ins.setAttribute("data-ad-slot", placement?.adSenseSlot || slot);
           container.appendChild(ins);
           try {
             if (!ins.getAttribute("data-ad-status")) {
@@ -234,7 +246,7 @@ export default function AdFrame({
 
       <div className="absolute top-2 right-2 z-10">
         <span className="text-[9px] font-mono text-text-muted/50 uppercase tracking-wider">
-          Ad
+          {enabledNetworks[activeIndex]?.name || "Ad"}
         </span>
       </div>
 
@@ -263,22 +275,27 @@ export default function AdFrame({
         </div>
       )}
 
-      {rotate && slides.length > 1 && (
+      {rotate && (
         <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1.5">
-          {slides.map((slide, i) => (
-            <button
-              key={slide.networkId}
-              onClick={() => setActiveIndex(i)}
-              className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-                i === activeIndex
-                  ? "bg-accent-primary w-3"
-                  : slide.failed
-                    ? "bg-text-muted/30"
-                    : "bg-text-muted/60 hover:bg-text-muted"
-              }`}
-              title={enabledNetworks[i]?.name}
-            />
-          ))}
+          {[0, 1, 2].map((i) => {
+            const slide = slides[i];
+            const isActive = i === activeIndex;
+            const isFailed = slide?.failed;
+            return (
+              <button
+                key={i}
+                onClick={() => { if (i < slides.length) setActiveIndex(i); }}
+                className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                  isActive
+                    ? "bg-accent-primary w-3"
+                    : isFailed
+                      ? "bg-text-muted/30"
+                      : "bg-text-muted/60 hover:bg-text-muted"
+                }`}
+                title={enabledNetworks[i]?.name || `Slot ${i + 1}`}
+              />
+            );
+          })}
         </div>
       )}
     </>

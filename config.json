@@ -190,14 +190,14 @@
       }
     ],
     "adPlacements": [
-      { "slot": "hero-banner", "location": "Below hero section", "format": "banner", "enabled": true, "networks": ["adsense", "monetag", "adsterra"] },
-      { "slot": "after-features", "location": "Between Features and HowItWorks", "format": "native", "enabled": true, "networks": ["adsense", "monetag"] },
-      { "slot": "sidebar-gallery", "location": "Sidebar on gallery", "format": "sidebar", "enabled": true, "networks": ["adsense", "monetag"] },
-      { "slot": "after-faq", "location": "After FAQ section", "format": "banner", "enabled": true, "networks": ["adsense", "monetag"] },
-      { "slot": "footer", "location": "Footer area", "format": "banner", "enabled": true, "networks": ["adsense", "monetag"] },
-      { "slot": "pip-top", "location": "Above PIP video player", "format": "banner", "enabled": true, "networks": ["adsense", "monetag", "adsterra"] },
-      { "slot": "after-blog", "location": "After blog list", "format": "banner", "enabled": true, "networks": ["adsense", "monetag"] },
-      { "slot": "after-blog-post", "location": "After blog post body", "format": "banner", "enabled": true, "networks": ["adsense", "monetag"] }
+      { "slot": "hero-banner", "location": "Below hero section", "format": "banner", "enabled": true, "networks": ["adsense"], "adSenseSlot": "4266907782" },
+      { "slot": "after-features", "location": "Between Features and HowItWorks", "format": "banner", "enabled": true, "networks": ["adsense"], "adSenseSlot": "4266907782" },
+      { "slot": "sidebar-gallery", "location": "Sidebar on gallery", "format": "sidebar", "enabled": true, "networks": ["adsense"], "adSenseSlot": "4266907782" },
+      { "slot": "after-faq", "location": "After FAQ section", "format": "banner", "enabled": true, "networks": ["adsense"], "adSenseSlot": "4266907782" },
+      { "slot": "footer", "location": "Footer area", "format": "banner", "enabled": true, "networks": ["adsense"], "adSenseSlot": "4266907782" },
+      { "slot": "pip-top", "location": "Above PIP video player", "format": "banner", "enabled": true, "networks": ["adsense"], "adSenseSlot": "5341055619" },
+      { "slot": "after-blog", "location": "After blog list", "format": "banner", "enabled": true, "networks": ["adsense"], "adSenseSlot": "4266907782" },
+      { "slot": "after-blog-post", "location": "After blog post body", "format": "banner", "enabled": true, "networks": ["adsense"], "adSenseSlot": "4266907782" }
     ],
     "buyMeACoffee": {
       "enabled": true,

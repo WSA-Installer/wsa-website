@@ -85,7 +85,7 @@ export default function HomePage() {
 
             <div className="relative animate-slide-in-right">
               <div className="relative rounded-xl overflow-hidden border border-border-primary shadow-2xl box-glow">
-                <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+                <div className="relative aspect-video">
                   <VideoAdPlayer
                     videoUrl={pip.videoUrl}
                     title="WSA Installer Demo"

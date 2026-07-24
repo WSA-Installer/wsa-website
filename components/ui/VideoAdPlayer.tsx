@@ -13,27 +13,26 @@ interface VideoAdPlayerProps {
   className?: string;
 }
 
-let ytApiLoading = false;
-let ytApiLoaded = false;
-
 function loadYtApi(): Promise<void> {
-  if (ytApiLoaded) return Promise.resolve();
-  if (ytApiLoading) {
-    return new Promise((resolve) => {
-      const check = setInterval(() => {
-        if (ytApiLoaded) { clearInterval(check); resolve(); }
-      }, 100);
-    });
-  }
-  ytApiLoading = true;
+  if (window.YT?.Player) return Promise.resolve();
+
   return new Promise((resolve) => {
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.body.appendChild(tag);
+    if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.body.appendChild(tag);
+    }
+
     window.onYouTubeIframeAPIReady = () => {
-      ytApiLoaded = true;
       resolve();
     };
+
+    const check = setInterval(() => {
+      if (window.YT?.Player) {
+        clearInterval(check);
+        resolve();
+      }
+    }, 100);
   });
 }
 
@@ -122,7 +121,7 @@ export default function VideoAdPlayer({ videoUrl, className = "" }: VideoAdPlaye
   }
 
   return (
-    <div ref={containerRef} className={`relative w-full h-full ${className}`}>
+    <div ref={containerRef} className={`w-full h-full ${className}`}>
       <div id={uid} className="absolute inset-0 w-full h-full" />
 
       {videoAds.enabled && videoAds.vastTag && (

@@ -140,7 +140,7 @@ export default function PIPVideoPlayer() {
             format="banner"
             rotate
             rotateInterval={15000}
-            className="!min-h-[250px]"
+            className="!min-h-[270px]"
           />
         </div>
 
