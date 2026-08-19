@@ -1,7 +1,7 @@
 "use client";
 
 import { useSiteConfig, useDownloadUrls, useMonetizationConfig, useContentConfig, usePIPConfig } from "@/hooks/useRuntimeConfig";
-import { Download, Shield, Zap, Coffee, Windows } from "lucide-react";
+import { Download, Shield, Zap, Coffee, Monitor } from "lucide-react";
 import Link from "next/link";
 import AdFrame from "@/components/ui/AdFrame";
 import VideoAdPlayer from "@/components/ui/VideoAdPlayer";
@@ -85,7 +85,7 @@ export default function DownloadsPage() {
             <div className="rounded-xl border border-border-primary bg-gradient-to-br from-bg-secondary to-bg-tertiary backdrop-blur-sm transition-all duration-300 hover:border-accent-primary/30 hover:shadow-glow-subtle">
               <div className="p-6">
                 <div className="flex items-center gap-2 mb-4">
-                  <Windows className="w-6 h-6 text-accent-primary" />
+                  <Monitor className="w-6 h-6 text-accent-primary" />
                   <h3 className="text-lg font-semibold text-text-primary">WSA Bundle (Windows 10)</h3>
                   <span className="inline-flex items-center rounded-full font-mono tracking-wider px-2.5 py-0.5 text-xs font-medium bg-bg-tertiary text-text-secondary border border-border-secondary ml-auto">Optional</span>
                 </div>
