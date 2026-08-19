@@ -1116,7 +1116,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "wsa-installer-v1-2-new-features",
     title: "WSA Installer v1.2: WSA Pacman, APK Handler & Virtualization Bypass",
-    date: "2026-08-18",
+    date: "2026-08-01",
     excerpt:
       "The biggest update yet — double-click APK installs, Windows Explorer integration, 3-phase system check, and automatic virtualization fixes.",
     tags: ["wsa-installer", "new-features", "apk", "pacman", "virtualization"],
