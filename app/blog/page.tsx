@@ -47,11 +47,6 @@ export default function BlogPage() {
         </div>
       </section>
 
-      <section className="py-6">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AdFrame slot="after-blog" format="banner" />
-        </div>
-      </section>
     </>
   );
 }
