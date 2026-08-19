@@ -1,7 +1,7 @@
 "use client";
 
 import { useSiteConfig, useDownloadUrls, useMonetizationConfig, useContentConfig, usePIPConfig } from "@/hooks/useRuntimeConfig";
-import { Download, Shield, Zap, Coffee } from "lucide-react";
+import { Download, Shield, Zap, Coffee, Windows } from "lucide-react";
 import Link from "next/link";
 import AdFrame from "@/components/ui/AdFrame";
 import VideoAdPlayer from "@/components/ui/VideoAdPlayer";
@@ -30,7 +30,7 @@ export default function DownloadsPage() {
             <p className="text-sm text-text-muted mt-1">WSA Build {SITE.wsaBuild}</p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             <div className="rounded-xl border border-border-primary bg-gradient-to-br from-bg-secondary to-bg-tertiary backdrop-blur-sm transition-all duration-300 hover:border-accent-primary/30 hover:shadow-glow-subtle">
               <div className="p-6">
                 <div className="flex items-center gap-2 mb-4">
@@ -60,7 +60,7 @@ export default function DownloadsPage() {
               <div className="p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <Shield className="w-6 h-6 text-accent-primary" />
-                  <h3 className="text-lg font-semibold text-text-primary">WSA Bundle</h3>
+                  <h3 className="text-lg font-semibold text-text-primary">WSA Bundle (Windows 11)</h3>
                   <span className="inline-flex items-center rounded-full font-mono tracking-wider px-2.5 py-0.5 text-xs font-medium bg-bg-tertiary text-text-secondary border border-border-secondary ml-auto">Optional</span>
                 </div>
                 <div className="space-y-3">
@@ -71,11 +71,37 @@ export default function DownloadsPage() {
                   >
                     <div>
                       <div className="font-medium text-text-primary group-hover:text-accent-primary transition-colors">{downloads.bundle.label}</div>
-                      <div className="text-xs text-text-muted">Offline installation bundle</div>
+                      <div className="text-xs text-text-muted">Offline installation bundle for Windows 11</div>
                     </div>
                     <div className="text-right flex flex-col items-end gap-1">
                       <Download className="w-5 h-5 text-text-muted" />
                       <div className="text-xs text-text-muted font-mono">{downloads.bundle.size}</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-xl border border-border-primary bg-gradient-to-br from-bg-secondary to-bg-tertiary backdrop-blur-sm transition-all duration-300 hover:border-accent-primary/30 hover:shadow-glow-subtle">
+              <div className="p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <Windows className="w-6 h-6 text-accent-primary" />
+                  <h3 className="text-lg font-semibold text-text-primary">WSA Bundle (Windows 10)</h3>
+                  <span className="inline-flex items-center rounded-full font-mono tracking-wider px-2.5 py-0.5 text-xs font-medium bg-bg-tertiary text-text-secondary border border-border-secondary ml-auto">Optional</span>
+                </div>
+                <div className="space-y-3">
+                  <a
+                    href={downloads.bundleWin10.url}
+                    download
+                    className="flex items-center justify-between p-3 rounded-lg border border-border-primary hover:border-accent-primary/50 hover:bg-bg-hover transition-colors group"
+                  >
+                    <div>
+                      <div className="font-medium text-text-primary group-hover:text-accent-primary transition-colors">{downloads.bundleWin10.label}</div>
+                      <div className="text-xs text-text-muted">Offline installation bundle for Windows 10</div>
+                    </div>
+                    <div className="text-right flex flex-col items-end gap-1">
+                      <Download className="w-5 h-5 text-text-muted" />
+                      <div className="text-xs text-text-muted font-mono">{downloads.bundleWin10.size}</div>
                     </div>
                   </a>
                 </div>

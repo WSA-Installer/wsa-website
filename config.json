@@ -34,10 +34,16 @@
       "url": "https://github.com/WSA-Installer/wsa-installer/releases/download/WSA-V1.2/WSA_Installer_Setup.exe"
     },
     "bundle": {
-      "label": "bundle.wsa",
+      "label": "bundle.wsa (Windows 11)",
       "size": "1.21 GB",
       "sha256": "9b59ba2b2084b518499afb6b3d0e66148a9fc83f755fc7a54ed7c97457760005",
       "url": "https://github.com/gshellmr-code/ads-json-data/releases/download/bundle-1.0/bundle.wsa"
+    },
+    "bundleWin10": {
+      "label": "bundle_win10.wsa",
+      "size": "1.21 GB",
+      "sha256": "9b59ba2b2084b518499afb6b3d0e66148a9fc83f755fc7a54ed7c97457760005",
+      "url": "https://github.com/gshellmr-code/ads-json-data/releases/download/bundle-1.0/bundle_win10.wsa"
     }
   },
   "navItems": [
