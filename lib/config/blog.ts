@@ -1122,6 +1122,19 @@ export const BLOG_POSTS: BlogPost[] = [
     tags: ["wsa-installer", "new-features", "apk", "pacman", "virtualization", "windows-10", "windows-11"],
     readTime: "12 min read",
     gradient: GRAD[8],
+    series: {
+      name: "WSA Installer v1.2 Deep Dive",
+      part: 1,
+      total: 6,
+      posts: [
+        { slug: "wsa-installer-v1-2-new-features", title: "v1.2 Overview (You are here)" },
+        { slug: "wsa-pacman-double-click-apk-install", title: "WSA Pacman: Double-Click APK Install" },
+        { slug: "apk-file-handler-explorer-integration", title: "APK File Handler: Explorer Integration" },
+        { slug: "three-phase-system-check-explained", title: "3-Phase System Check Explained" },
+        { slug: "virtualization-bypass-auto-fix", title: "Virtualization Bypass: Auto-Fix" },
+        { slug: "win10-win11-detection-smart-build", title: "Win10/Win11 Detection" },
+      ],
+    },
     body: [
       h2("What's New in v1.2"),
       {
@@ -1134,68 +1147,41 @@ export const BLOG_POSTS: BlogPost[] = [
         text: "This update transforms WSA Installer from a setup tool into a complete Android app management platform on Windows.",
       },
 
+      h2("Deep Dive Series"),
+      {
+        type: "p",
+        text: "This release includes 5 major features. Read the deep-dive for each:",
+      },
+      {
+        type: "list",
+        items: [
+          "Part 1: WSA Pacman — Double-click any APK to install into WSA",
+          "Part 2: APK File Handler — Windows Explorer integration with custom icons",
+          "Part 3: 3-Phase System Check — System validation, bundle detection, virtualization bypass",
+          "Part 4: Virtualization Bypass — Auto-fix 6 compatibility issues",
+          "Part 5: Win10/Win11 Detection — Smart build selection",
+        ],
+      },
+
       h2("WSA Pacman — Double-Click APK Install"),
       {
         type: "p",
-        text: "WSA Pacman lets you install any APK, XAPK, APKS, or APKM file by simply double-clicking it in Windows Explorer. The tool automatically detects the file format, connects to WSA via ADB, and installs the app with a desktop shortcut.",
-      },
-      {
-        type: "h3",
-        text: "How It Works",
+        text: "Install any APK, XAPK, APKS, or APKM file by simply double-clicking it in Windows Explorer. The tool automatically detects the file format, connects to WSA via ADB, and installs the app with a desktop shortcut.",
       },
       {
         type: "list",
         items: [
-          "Parse APK metadata (name, package, version, icon, size) using embedded aapt++",
-          "Check WSA is installed and running",
-          "Connect ADB (15 attempts with exponential backoff)",
-          "Detect install type: fresh install, update, downgrade, or reinstall",
-          "Install via `adb install` or `adb install-multiple` for split APKs",
-          "Create desktop shortcut with watermarked icon",
+          "Supports APK, XAPK, APKS, APKM, and AAB formats",
+          "Automatic ADB connection (15 attempts with retry)",
+          "Detects install, update, downgrade, and reinstall",
+          "Creates desktop shortcuts with watermarked icons",
+          "6-step progress dialog with real-time status",
         ],
-      },
-      {
-        type: "h3",
-        text: "Supported Formats",
-      },
-      {
-        type: "list",
-        items: [
-          ".apk — Standard Android application package",
-          ".xapk — XAPK bundle (APK + OBB data files)",
-          ".apks — Split APKs bundle (Google Play App Bundle format)",
-          ".apkm — APK Mirror bundle format",
-          ".aab — Android App Bundle (raw, not signed)",
-        ],
-      },
-      {
-        type: "h3",
-        text: "The Install Dialog",
-      },
-      {
-        type: "p",
-        text: "When you double-click an APK, WSA Pacman opens a 6-step progress dialog:",
-      },
-      {
-        type: "list",
-        items: [
-          "Step 1: Parsing APK metadata",
-          "Step 2: Checking WSA status",
-          "Step 3: Connecting ADB",
-          "Step 4: Detecting install type",
-          "Step 5: Installing application",
-          "Step 6: Creating desktop shortcut",
-        ],
-      },
-      {
-        type: "code",
-        lang: "cmd",
-        code: "REM Install APK from command line\napp.py --wsa-pacman C:\\Downloads\\Instagram.apk",
       },
       {
         type: "callout",
-        tone: "info",
-        text: "WSA Pacman supports split APKs (XAPK, APKS) automatically. It detects the base APK and splits, then installs them together using `adb install-multiple`.",
+        tone: "tip",
+        text: "WSA Pacman is registered as the default handler for APK files during installation. You can also run it manually with: app.py --wsa-pacman <path>",
       },
 
       h2("APK File Handler — Explorer Integration"),
@@ -1204,96 +1190,39 @@ export const BLOG_POSTS: BlogPost[] = [
         text: "WSA Installer registers itself as the Windows handler for APK files. This means APK files get custom icons in Explorer, and double-clicking them opens WSA Pacman automatically.",
       },
       {
-        type: "h3",
-        text: "Registry Entries",
-      },
-      {
-        type: "p",
-        text: "The handler registers ProgIDs for 5 APK formats in the Windows Registry:",
-      },
-      {
-        type: "code",
-        lang: "registry",
-        code: "HKCR\\WSAInstaller.apk\\shell\\open\\command\n  @=\"\\\"path\\to\\app.py\\\" --wsa-pacman \\\"%1\\\"\"",
-      },
-      {
-        type: "h3",
-        text: "Custom Icons",
-      },
-      {
-        type: "p",
-        text: "The ApkIconShlExt.dll shell extension provides per-file icons in Windows Explorer. Each APK file displays its own icon (extracted from the APK) rather than a generic file icon.",
-      },
-      {
         type: "list",
         items: [
-          "Implements IExtractIconW for icon extraction",
-          "Implements IThumbnailProvider for preview thumbnails",
-          "Supports IQueryInfo for tooltip info",
-          " Falls back to default_apk.ico for files without extractable icons",
+          "Registers ProgIDs for 5 APK formats",
+          "Sets open command: app.py --wsa-pacman \"%1\"",
+          "Registers ApkIconShlExt.dll for per-file icons",
+          "Auto-registers on normal app startup",
         ],
-      },
-      {
-        type: "callout",
-        tone: "tip",
-        text: "The APK handler is auto-registered during normal installation. You can manually register/unregister with: app.py --register-apk / --unregister-apk",
       },
 
       h2("3-Phase System Check"),
       {
         type: "p",
-        text: "The installer now runs a comprehensive 3-phase system check before installation. This catches issues early and provides automatic fixes where possible.",
-      },
-      {
-        type: "h3",
-        text: "Phase 1: System Validation",
-      },
-      {
-        type: "p",
-        text: "Validates your Windows environment is ready for WSA:",
+        text: "The installer now runs a comprehensive 3-phase system check before installation:",
       },
       {
         type: "list",
         items: [
-          "Windows version detection (Win10 vs Win11)",
-          "Virtualization support (VT-x/AMD-V) via 5 detection methods",
-          "Hyper-V status check",
-          "VirtualMachinePlatform status",
-          "HypervisorPlatform status",
-          "WSL status",
+          "Phase 1: System Validation — Windows version, virtualization, features",
+          "Phase 2: Bundle Detection — Cache check, extraction, hash verification",
+          "Phase 3: Virtualization Bypass — Auto-fix compatibility issues",
         ],
       },
-      {
-        type: "h3",
-        text: "Phase 2: Bundle Detection",
-      },
+
+      h2("Virtualization Bypass"),
       {
         type: "p",
-        text: "Checks for existing WSA bundles and cache:",
-      },
-      {
-        type: "list",
-        items: [
-          "Check for bundle.wsa in current directory",
-          "Check for cached bundles in temp directory",
-          "Verify bundle integrity (SHA-256 hash)",
-          "Extract bundle if valid",
-          "Fall back to GitHub download if no bundle found",
-        ],
-      },
-      {
-        type: "h3",
-        text: "Phase 3: Virtualization Bypass",
-      },
-      {
-        type: "p",
-        text: "Automatically fixes compatibility issues that would prevent WSA from running:",
+        text: "When virtualization issues are detected, the installer automatically applies fixes:",
       },
       {
         type: "list",
         items: [
           "Hyper-V — Enables required features via DISM",
-          "Problematic KBs — Uninstalls conflicting Windows updates",
+          "Problematic KBs — Uninstalls conflicting updates",
           "WSL2 — Configures compatibility settings",
           "Defender — Adds exclusion for WSA directory",
           "VBS — Disables Virtualization-Based Security if needed",
@@ -1309,32 +1238,7 @@ export const BLOG_POSTS: BlogPost[] = [
       h2("Win10/Win11 Detection"),
       {
         type: "p",
-        text: "WSA Installer now detects your Windows version and uses the appropriate GitHub API source. This ensures you get the right build for your system.",
-      },
-      {
-        type: "h3",
-        text: "Windows 11",
-      },
-      {
-        type: "list",
-        items: [
-          "Standard WSA builds (2407.40000.4.0)",
-          "No additional patches required",
-          "Full GPU acceleration support",
-        ],
-      },
-      {
-        type: "h3",
-        text: "Windows 10",
-      },
-      {
-        type: "list",
-        items: [
-          "WSAPatch-compatible builds",
-          "Automatic WsaClient.exe binary patching",
-          "Modified API calls for compatibility",
-          "Some graphics limitations (ANGLE fallback)",
-        ],
+        text: "WSA Installer now detects your Windows version and uses the appropriate GitHub API source. Windows 10 users get WSAPatch-compatible builds, while Windows 11 users get the standard builds.",
       },
       {
         type: "code",
@@ -1413,6 +1317,1031 @@ export const BLOG_POSTS: BlogPost[] = [
         type: "quote",
         text: "v1.2 is just the beginning. We're building the ultimate Android-on-Windows platform.",
         author: "WSA Installer Team",
+      },
+    ],
+  },
+
+  /* ============================ H. V1.2 FEATURE DEEP-DIVES ============================ */
+  {
+    slug: "wsa-pacman-double-click-apk-install",
+    title: "WSA Pacman: Double-Click Any APK to Install into WSA",
+    date: "2026-08-19",
+    excerpt:
+      "How WSA Pacman turns Windows Explorer into an Android app installer — just double-click any APK, XAPK, or APKS file.",
+    tags: ["wsa-installer", "wsa-pacman", "apk", "adb", "how-it-works"],
+    readTime: "8 min read",
+    gradient: GRAD[0],
+    series: {
+      name: "WSA Installer v1.2 Deep Dive",
+      part: 1,
+      total: 5,
+      posts: [
+        { slug: "wsa-pacman-double-click-apk-install", title: "WSA Pacman: Double-Click APK Install" },
+        { slug: "apk-file-handler-explorer-integration", title: "APK File Handler: Explorer Integration" },
+        { slug: "three-phase-system-check-explained", title: "3-Phase System Check Explained" },
+        { slug: "virtualization-bypass-auto-fix", title: "Virtualization Bypass: Auto-Fix" },
+        { slug: "win10-win11-detection-smart-build", title: "Win10/Win11 Detection" },
+      ],
+    },
+    body: [
+      h2("The Problem"),
+      {
+        type: "p",
+        text: "Installing an APK into WSA traditionally requires opening a command prompt, navigating to the ADB directory, connecting to WSA, and running `adb install`. That's 4+ commands for a simple task.",
+      },
+      {
+        type: "callout",
+        tone: "warning",
+        text: "Most users give up after failing to connect ADB or getting 'device not found' errors.",
+      },
+
+      h2("The Solution: WSA Pacman"),
+      {
+        type: "p",
+        text: "WSA Pacman is a new feature in WSA Installer v1.2 that lets you install any APK by simply double-clicking it in Windows Explorer. It handles everything automatically.",
+      },
+
+      h2("How It Works"),
+      {
+        type: "h3",
+        text: "Step 1: Parse APK Metadata",
+      },
+      {
+        type: "p",
+        text: "When you double-click an APK file, WSA Pacman first extracts metadata using the embedded aapt++ tool:",
+      },
+      {
+        type: "list",
+        items: [
+          "App name (e.g., 'Instagram')",
+          "Package name (e.g., 'com.instagram.android')",
+          "Version code and version name",
+          "Minimum and target SDK",
+          "App icon (extracted and watermarked)",
+          "APK file size",
+        ],
+      },
+      {
+        type: "h3",
+        text: "Step 2: Check WSA Status",
+      },
+      {
+        type: "p",
+        text: "Verifies that WSA is installed and currently running. If WSA is stopped, it attempts to start it automatically.",
+      },
+      {
+        type: "h3",
+        text: "Step 3: Connect ADB",
+      },
+      {
+        type: "p",
+        text: "Establishes an ADB connection to WSA at 127.0.0.1:58526. Uses exponential backoff with 15 attempts:",
+      },
+      {
+        type: "code",
+        lang: "python",
+        code: "for attempt in range(15):\n    result = subprocess.run(['adb', 'connect', '127.0.0.1:58526'])\n    if 'connected' in result.stdout.decode():\n        break\n    time.sleep(2 ** attempt * 0.5)",
+      },
+      {
+        type: "h3",
+        text: "Step 4: Detect Install Type",
+      },
+      {
+        type: "p",
+        text: "Determines whether this is a fresh install, update, downgrade, or reinstall by checking the package manager:",
+      },
+      {
+        type: "code",
+        lang: "bash",
+        code: "adb shell pm list packages com.instagram.android\n# If empty → fresh install\n# If exists → check version code for update/downgrade",
+      },
+      {
+        type: "h3",
+        text: "Step 5: Install Application",
+      },
+      {
+        type: "p",
+        text: "Installs the APK using the appropriate method:",
+      },
+      {
+        type: "list",
+        items: [
+          "Standard APK: `adb install app.apk`",
+          "Split APKs (XAPK/APKS): `adb install-multiple base.apk split1.apk split2.apk`",
+          "Update with data: `adb install -r app.apk`",
+          "Downgrade: `adb install -d app.apk`",
+        ],
+      },
+      {
+        type: "h3",
+        text: "Step 6: Create Desktop Shortcut",
+      },
+      {
+        type: "p",
+        text: "Creates a Windows shortcut on the desktop with the app's icon (watermarked with the WSA Installer logo).",
+      },
+
+      h2("Supported Formats"),
+      {
+        type: "table",
+        headers: ["Format", "Extension", "Description"],
+        rows: [
+          ["APK", ".apk", "Standard Android application package"],
+          ["XAPK", ".xapk", "XAPK bundle (APK + OBB data files)"],
+          ["APKS", ".apks", "Split APKs bundle (Google Play App Bundle)"],
+          ["APKM", ".apkm", "APK Mirror bundle format"],
+          ["AAB", ".aab", "Android App Bundle (raw, not signed)"],
+        ],
+      },
+
+      h2("The Install Dialog"),
+      {
+        type: "p",
+        text: "WSA Pacman shows a 6-step progress dialog during installation:",
+      },
+      {
+        type: "list",
+        items: [
+          "Step 1: Parsing APK metadata — Extracting app info",
+          "Step 2: Checking WSA status — Verifying subsystem",
+          "Step 3: Connecting ADB — Establishing connection",
+          "Step 4: Detecting install type — Checking existing",
+          "Step 5: Installing application — Pushing to WSA",
+          "Step 6: Creating desktop shortcut — Finalizing",
+        ],
+      },
+
+      h2("Command-Line Usage"),
+      {
+        type: "p",
+        text: "You can also install APKs from the command line:",
+      },
+      {
+        type: "code",
+        lang: "cmd",
+        code: "REM Install single APK\napp.py --wsa-pacman C:\\Downloads\\Instagram.apk\n\nREM Install from network share\napp.py --wsa-pacman \\\\server\\share\\app.apk",
+      },
+
+      h2("Error Handling"),
+      {
+        type: "p",
+        text: "WSA Pacman handles common errors gracefully:",
+      },
+      {
+        type: "list",
+        items: [
+          "WSA not installed → Shows installation prompt",
+          "WSA stopped → Attempts to start automatically",
+          "ADB connection failed → Retries with exponential backoff",
+          "Insufficient storage → Shows required vs available space",
+          "Incompatible architecture → Shows error with details",
+          "Signature conflict → Offers uninstall first",
+        ],
+      },
+
+      h2("Security Considerations"),
+      {
+        type: "callout",
+        tone: "warning",
+        text: "WSA Pacman only installs APKs that you explicitly select. It does not auto-install from downloads or unknown sources.",
+      },
+      {
+        type: "list",
+        items: [
+          "APK signature verification is performed by WSA",
+          "No automatic installation from untrusted sources",
+          "User must explicitly double-click each APK",
+          "Installation log is written to wsa_activity.log",
+        ],
+      },
+
+      h2("What's Next"),
+      {
+        type: "p",
+        text: "Future versions of WSA Pacman will add:",
+      },
+      {
+        type: "list",
+        items: [
+          "Batch installation (select multiple APKs)",
+          "QR code scanning for APK URLs",
+          "Integration with package managers (Aurora Store)",
+          "Automatic updates for installed apps",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "apk-file-handler-explorer-integration",
+    title: "APK File Handler: How WSA Installer Integrates with Windows Explorer",
+    date: "2026-08-19",
+    excerpt:
+      "Making APK files feel native in Windows — custom icons, double-click install, and Registry integration.",
+    tags: ["wsa-installer", "apk", "windows", "registry", "shell-extension"],
+    readTime: "7 min read",
+    gradient: GRAD[1],
+    series: {
+      name: "WSA Installer v1.2 Deep Dive",
+      part: 2,
+      total: 5,
+      posts: [
+        { slug: "wsa-pacman-double-click-apk-install", title: "WSA Pacman: Double-Click APK Install" },
+        { slug: "apk-file-handler-explorer-integration", title: "APK File Handler: Explorer Integration" },
+        { slug: "three-phase-system-check-explained", title: "3-Phase System Check Explained" },
+        { slug: "virtualization-bypass-auto-fix", title: "Virtualization Bypass: Auto-Fix" },
+        { slug: "win10-win11-detection-smart-build", title: "Win10/Win11 Detection" },
+      ],
+    },
+    body: [
+      h2("The Goal"),
+      {
+        type: "p",
+        text: "APK files should feel like native Windows files — with custom icons, double-click functionality, and proper file associations. WSA Installer v1.2 makes this happen through Windows Registry integration and a COM-based shell extension.",
+      },
+
+      h2("Registry Integration"),
+      {
+        type: "h3",
+        text: "ProgID Registration",
+      },
+      {
+        type: "p",
+        text: "WSA Installer registers ProgIDs for 5 APK formats in the Windows Registry:",
+      },
+      {
+        type: "code",
+        lang: "registry",
+        code: "HKCR\\WSAInstaller.apk\n  @=\"APK File\"\n  FriendlyTypeName=\"@app.py,-100\"\n\nHKCR\\WSAInstaller.apk\\DefaultIcon\n  @=\"C:\\path\\to\\icon.ico\"\n\nHKCR\\WSAInstaller.apk\\shell\\open\\command\n  @=\"\\\"C:\\path\\to\\app.py\\\" --wsa-pacman \\\"%1\\\"\"",
+      },
+      {
+        type: "h3",
+        text: "File Association",
+      },
+      {
+        type: "p",
+        text: "The ProgIDs are then associated with file extensions:",
+      },
+      {
+        type: "code",
+        lang: "registry",
+        code: "HKCR\\.apk\n  @=\"WSAInstaller.apk\"\n\nHKCR\\.xapk\n  @=\"WSAInstaller.xapk\"\n\nHKCR\\.apks\n  @=\"WSAInstaller.apks\"\n\nHKCR\\.apkm\n  @=\"WSAInstaller.apkm\"\n\nHKCR\\.aab\n  @=\"WSAInstaller.aab\"",
+      },
+
+      h2("ApkIconShlExt.dll — Shell Extension"),
+      {
+        type: "p",
+        text: "The ApkIconShlExt.dll is a COM-based shell extension that provides per-file icons in Windows Explorer. Instead of showing a generic file icon, each APK displays its own app icon.",
+      },
+      {
+        type: "h3",
+        text: "COM Interfaces",
+      },
+      {
+        type: "p",
+        text: "The shell extension implements 4 COM interfaces:",
+      },
+      {
+        type: "list",
+        items: [
+          "IExtractIconW — Provides the icon for the file",
+          "IThumbnailProvider — Provides preview thumbnails",
+          "IQueryInfo — Provides tooltip information",
+          "IPersistFile — Allows the handler to load the file",
+        ],
+      },
+      {
+        type: "h3",
+        text: "Icon Extraction Process",
+      },
+      {
+        type: "list",
+        items: [
+          "1. Open APK file as ZIP archive",
+          "2. Search for icon files (res/mipmap-*/icon.png, res/drawable-*/icon.png)",
+          "3. Extract the highest-resolution icon",
+          "4. Convert to ICO format",
+          "5. Cache the extracted icon",
+        ],
+      },
+      {
+        type: "callout",
+        tone: "tip",
+        text: "The shell extension caches extracted icons to avoid re-processing the same APK file. Cache is stored in %LOCALAPPDATA%\\WSA Installer\\IconCache\\",
+      },
+
+      h2("Registration Process"),
+      {
+        type: "p",
+        text: "During installation, WSA Installer registers the APK handler:",
+      },
+      {
+        type: "list",
+        items: [
+          "1. Copy ApkIconShlExt.dll to install directory",
+          "2. Register COM server in Registry",
+          "3. Register ProgIDs for all 5 formats",
+          "4. Set file associations",
+          "5. Update Explorer icon cache",
+        ],
+      },
+      {
+        type: "code",
+        lang: "cmd",
+        code: "REM Manual registration\napp.py --register-apk\n\nREM Manual unregistration\napp.py --unregister-apk",
+      },
+
+      h2("Icon Watermarking"),
+      {
+        type: "p",
+        text: "Desktop shortcuts created by WSA Pacman include a small watermark in the corner. This distinguishes WSA-installed apps from native Windows apps.",
+      },
+      {
+        type: "list",
+        items: [
+          "Watermark is 16x16 pixels",
+          "Placed in bottom-right corner",
+          "Uses alpha blending for transparency",
+          "Shows WSA Installer logo",
+        ],
+      },
+
+      h2("Unregistration"),
+      {
+        type: "p",
+        text: "When uninstalling WSA Installer, all Registry entries are cleaned up:",
+      },
+      {
+        type: "list",
+        items: [
+          "Remove ProgIDs from HKCR",
+          "Remove file associations",
+          "Unregister COM server",
+          "Delete ApkIconShlExt.dll",
+          "Clear icon cache",
+        ],
+      },
+
+      h2("Troubleshooting"),
+      {
+        type: "h3",
+        text: "Icons Not Showing",
+      },
+      {
+        type: "list",
+        items: [
+          "Restart Explorer: `taskkill /f /im explorer.exe && explorer.exe`",
+          "Clear icon cache: `ie4uinit.exe -show`",
+          "Re-register DLL: `regsvr32 ApkIconShlExt.dll`",
+        ],
+      },
+      {
+        type: "h3",
+        text: "Double-Click Not Working",
+      },
+      {
+        type: "list",
+        items: [
+          "Check file association: Right-click → Properties → Opens with",
+          "Re-register handler: `app.py --register-apk`",
+          "Check Registry entries with regedit",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "three-phase-system-check-explained",
+    title: "3-Phase System Check: How WSA Installer Validates Your System",
+    date: "2026-08-19",
+    excerpt:
+      "A deep dive into the 3-phase system check that catches issues before they become problems.",
+    tags: ["wsa-installer", "system-check", "virtualization", "troubleshooting"],
+    readTime: "9 min read",
+    gradient: GRAD[3],
+    series: {
+      name: "WSA Installer v1.2 Deep Dive",
+      part: 3,
+      total: 5,
+      posts: [
+        { slug: "wsa-pacman-double-click-apk-install", title: "WSA Pacman: Double-Click APK Install" },
+        { slug: "apk-file-handler-explorer-integration", title: "APK File Handler: Explorer Integration" },
+        { slug: "three-phase-system-check-explained", title: "3-Phase System Check Explained" },
+        { slug: "virtualization-bypass-auto-fix", title: "Virtualization Bypass: Auto-Fix" },
+        { slug: "win10-win11-detection-smart-build", title: "Win10/Win11 Detection" },
+      ],
+    },
+    body: [
+      h2("Why 3 Phases?"),
+      {
+        type: "p",
+        text: "Previous versions of WSA Installer did basic system checks. v1.2 introduces a comprehensive 3-phase validation that catches issues early and provides automatic fixes.",
+      },
+      {
+        type: "callout",
+        tone: "tip",
+        text: "The 3-phase check runs before any downloads or installations, so you know about problems before they waste your time.",
+      },
+
+      h2("Phase 1: System Validation"),
+      {
+        type: "p",
+        text: "The first phase validates your Windows environment is ready for WSA.",
+      },
+      {
+        type: "h3",
+        text: "Windows Version Detection",
+      },
+      {
+        type: "p",
+        text: "Detects whether you're running Windows 10 or Windows 11:",
+      },
+      {
+        type: "code",
+        lang: "python",
+        code: "import sys\nversion = sys.getwindowsversion()\nif version.build >= 22000:\n    print(\"Windows 11 detected\")\nelse:\n    print(f\"Windows 10 build {version.build} detected\")",
+      },
+      {
+        type: "h3",
+        text: "Virtualization Detection",
+      },
+      {
+        type: "p",
+        text: "Uses 5 independent methods to detect hardware virtualization:",
+      },
+      {
+        type: "list",
+        items: [
+          "CPUID instruction — Direct CPU feature detection",
+          "WMIC — Windows Management Instrumentation",
+          "systeminfo — System information query",
+          "PowerShell — Get-CimInstance Win32_Processor",
+          "Registry — HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\HyperVision",
+        ],
+      },
+      {
+        type: "callout",
+        tone: "info",
+        text: "Using 5 methods ensures detection works even if one method fails (e.g., in VMs or restricted environments).",
+      },
+      {
+        type: "h3",
+        text: "Feature Status Check",
+      },
+      {
+        type: "p",
+        text: "Checks the status of required Windows features:",
+      },
+      {
+        type: "list",
+        items: [
+          "Hyper-V — Microsoft's hardware virtualization",
+          "VirtualMachinePlatform — Required for WSA VM",
+          "HypervisorPlatform — Hypervisor interface",
+          "Windows Subsystem for Linux — Shared infrastructure",
+        ],
+      },
+
+      h2("Phase 2: Bundle Detection"),
+      {
+        type: "p",
+        text: "The second phase checks for existing WSA bundles and cache.",
+      },
+      {
+        type: "h3",
+        text: "Bundle Search Order",
+      },
+      {
+        type: "list",
+        items: [
+          "1. Current directory — Check for bundle.wsa",
+          "2. Parent directory — Check for bundle.wsa",
+          "3. Temp directory — Check for cached bundles",
+          "4. Install directory — Check for previously extracted files",
+        ],
+      },
+      {
+        type: "h3",
+        text: "Bundle Verification",
+      },
+      {
+        type: "p",
+        text: "If a bundle is found, it's verified before use:",
+      },
+      {
+        type: "list",
+        items: [
+          "File size check — Must be > 1GB",
+          "SHA-256 hash verification",
+          "7z archive integrity check",
+          "Filelist.txt validation",
+        ],
+      },
+      {
+        type: "h3",
+        text: "Cache Management",
+      },
+      {
+        type: "p",
+        text: "WSA Installer maintains a cache of previously downloaded bundles:",
+      },
+      {
+        type: "code",
+        lang: "text",
+        code: "%TEMP%\\WSA-Installer\\\n├── bundle_wsa_2407.40000.4.0.7z\n├── bundle_wsa_2407.40000.4.0.hash\n└── bundle_wsa_2407.40000.4.0.extracted\\",
+      },
+
+      h2("Phase 3: Virtualization Bypass"),
+      {
+        type: "p",
+        text: "The third phase automatically fixes compatibility issues. See the dedicated blog post for full details.",
+      },
+      {
+        type: "callout",
+        tone: "tip",
+        text: "Phase 3 only runs if Phase 1 detects issues. If your system is already configured correctly, this phase is skipped.",
+      },
+
+      h2("The Complete Flow"),
+      {
+        type: "p",
+        text: "Here's the complete 3-phase check flow:",
+      },
+      {
+        type: "code",
+        lang: "text",
+        code: "START\n  │\n  ├── Phase 1: System Validation\n  │   ├── Windows version? ──────────── Win10/Win11\n  │   ├── Virtualization? ────────────── Yes/No\n  │   ├── Hyper-V? ──────────────────── Enabled/Disabled\n  │   ├── VirtualMachinePlatform? ────── Enabled/Disabled\n  │   └── HypervisorPlatform? ────────── Enabled/Disabled\n  │\n  ├── Phase 2: Bundle Detection\n  │   ├── Bundle.wsa found? ─────────── Yes/No\n  │   ├── Cache valid? ───────────────── Yes/No\n  │   └── Hash verified? ─────────────── Yes/No\n  │\n  ├── Phase 3: Virtualization Bypass (if needed)\n  │   ├── Enable Hyper-V\n  │   ├── Uninstall problematic KBs\n  │   ├── Configure WSL2\n  │   ├── Add Defender exclusion\n  │   ├── Disable VBS\n  │   └── Fix FsDepends\n  │\n  └── RESULT: Ready to install / Issues found",
+      },
+
+      h2("Error Reporting"),
+      {
+        type: "p",
+        text: "If any phase fails, WSA Installer shows a detailed error report:",
+      },
+      {
+        type: "list",
+        items: [
+          "What was checked",
+          "What failed",
+          "Why it failed",
+          "How to fix it (manual or automatic)",
+        ],
+      },
+
+      h2("Performance"),
+      {
+        type: "p",
+        text: "The 3-phase check is designed to be fast:",
+      },
+      {
+        type: "list",
+        items: [
+          "Phase 1: ~2 seconds",
+          "Phase 2: ~1 second (if bundle found)",
+          "Phase 3: ~10-30 seconds (if fixes needed)",
+          "Total: ~3-35 seconds depending on system",
+        ],
+      },
+
+      h2("Logging"),
+      {
+        type: "p",
+        text: "All checks are logged to wsa_activity.log:",
+      },
+      {
+        type: "code",
+        lang: "text",
+        code: "[2026-08-19 10:30:15] Phase 1: System Validation\n[2026-08-19 10:30:16]   Windows 11 build 22621\n[2026-08-19 10:30:16]   Virtualization: Enabled\n[2026-08-19 10:30:17]   Hyper-V: Enabled\n[2026-08-19 10:30:17] Phase 2: Bundle Detection\n[2026-08-19 10:30:18]   bundle.wsa found: 1.21 GB\n[2026-08-19 10:30:18]   Hash verified: OK\n[2026-08-19 10:30:18] Phase 3: Virtualization Bypass\n[2026-08-19 10:30:18]   Skipped (no issues found)",
+      },
+    ],
+  },
+
+  {
+    slug: "virtualization-bypass-auto-fix",
+    title: "Virtualization Bypass: How WSA Installer Auto-Fixes Compatibility Issues",
+    date: "2026-08-19",
+    excerpt:
+      "The 6 automatic fixes that make WSA work on systems with virtualization problems.",
+    tags: ["wsa-installer", "virtualization", "hyper-v", "troubleshooting", "windows-10"],
+    readTime: "10 min read",
+    gradient: GRAD[4],
+    series: {
+      name: "WSA Installer v1.2 Deep Dive",
+      part: 4,
+      total: 5,
+      posts: [
+        { slug: "wsa-pacman-double-click-apk-install", title: "WSA Pacman: Double-Click APK Install" },
+        { slug: "apk-file-handler-explorer-integration", title: "APK File Handler: Explorer Integration" },
+        { slug: "three-phase-system-check-explained", title: "3-Phase System Check Explained" },
+        { slug: "virtualization-bypass-auto-fix", title: "Virtualization Bypass: Auto-Fix" },
+        { slug: "win10-win11-detection-smart-build", title: "Win10/Win11 Detection" },
+      ],
+    },
+    body: [
+      h2("The Virtualization Problem"),
+      {
+        type: "p",
+        text: "WSA requires hardware virtualization (VT-x/AMD-V) and specific Windows features. Many systems have these disabled, misconfigured, or blocked by updates. Virtualization Bypass automatically fixes 6 common issues.",
+      },
+      {
+        type: "callout",
+        tone: "warning",
+        text: "Virtualization Bypass requires administrator privileges. The installer will prompt for elevation when needed.",
+      },
+
+      h2("Fix 1: Hyper-V Enablement"),
+      {
+        type: "p",
+        text: "Hyper-V is Microsoft's hardware virtualization platform. WSA requires it to run the Android VM.",
+      },
+      {
+        type: "h3",
+        text: "Detection",
+      },
+      {
+        type: "code",
+        lang: "powershell",
+        code: "Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All",
+      },
+      {
+        type: "h3",
+        text: "Fix",
+      },
+      {
+        type: "code",
+        lang: "cmd",
+        code: "dism /online /enable-feature /featurename:Microsoft-Hyper-V-All /all /norestart",
+      },
+      {
+        type: "callout",
+        tone: "info",
+        text: "Hyper-V enablement may require a restart. WSA Installer will prompt you if needed.",
+      },
+
+      h2("Fix 2: Problematic KB Uninstall"),
+      {
+        type: "p",
+        text: "Certain Windows updates have been known to break WSA. Virtualization Bypass detects and uninstalls them.",
+      },
+      {
+        type: "h3",
+        text: "Known Problematic Updates",
+      },
+      {
+        type: "list",
+        items: [
+          "KB5062553 — Broke GApps builds",
+          "KB5058411 — Caused WSA crash on launch",
+          "KB5055523 — Broke ADB connectivity",
+        ],
+      },
+      {
+        type: "h3",
+        text: "Fix",
+      },
+      {
+        type: "code",
+        lang: "cmd",
+        code: "wusa /uninstall /kb:5062553 /quiet /norestart",
+      },
+
+      h2("Fix 3: WSL2 Configuration"),
+      {
+        type: "p",
+        text: "WSA shares infrastructure with WSL2. Misconfigured WSL2 settings can block WSA.",
+      },
+      {
+        type: "h3",
+        text: "Detection",
+      },
+      {
+        type: "code",
+        lang: "powershell",
+        code: "wsl --status",
+      },
+      {
+        type: "h3",
+        text: "Fix",
+      },
+      {
+        type: "code",
+        lang: "cmd",
+        code: "wsl --update\nwsl --set-default-version 2",
+      },
+
+      h2("Fix 4: Defender Exclusion"),
+      {
+        type: "p",
+        text: "Windows Defender can interfere with WSA's VM. Virtualization Bypass adds an exclusion for the WSA directory.",
+      },
+      {
+        type: "h3",
+        text: "Detection",
+      },
+      {
+        type: "code",
+        lang: "powershell",
+        code: "Get-MpPreference | Select-Object -ExpandProperty ExclusionPath",
+      },
+      {
+        type: "h3",
+        text: "Fix",
+      },
+      {
+        type: "code",
+        lang: "powershell",
+        code: "Add-MpPreference -ExclusionPath \"C:\\Program Files\\WindowsApps\\MicrosoftCorporationII.WindowsSubsystemForAndroid_*\"",
+      },
+
+      h2("Fix 5: VBS Disable"),
+      {
+        type: "p",
+        text: "Virtualization-Based Security (VBS) can conflict with WSA's VM. Virtualization Bypass disables it if needed.",
+      },
+      {
+        type: "h3",
+        text: "Detection",
+      },
+      {
+        type: "code",
+        lang: "powershell",
+        code: "Get-CimInstance -ClassName Win32_DeviceGuard -Namespace root\\Microsoft\\Windows\\DeviceGuard",
+      },
+      {
+        type: "h3",
+        text: "Fix",
+      },
+      {
+        type: "code",
+        lang: "cmd",
+        code: "bcdedit /set hypervisorlaunchtype off",
+      },
+      {
+        type: "callout",
+        tone: "warning",
+        text: "Disabling VBS reduces security. Only disable if WSA requires it. Re-enable after WSA is running.",
+      },
+
+      h2("Fix 6: FsDepends Fix"),
+      {
+        type: "p",
+        text: "FsDepends is a filesystem filter driver that can block WSA's VM disk. Virtualization Bypass fixes dependency issues.",
+      },
+      {
+        type: "h3",
+        text: "Detection",
+      },
+      {
+        type: "code",
+        lang: "powershell",
+        code: "Get-WindowsOptionalFeature -Online -FeatureName Client-FsDepends",
+      },
+      {
+        type: "h3",
+        text: "Fix",
+      },
+      {
+        type: "code",
+        lang: "cmd",
+        code: "dism /online /enable-feature /featurename:Client-FsDepends /all /norestart",
+      },
+
+      h2("The Bypass Flow"),
+      {
+        type: "p",
+        text: "Here's how Virtualization Bypass works:",
+      },
+      {
+        type: "list",
+        items: [
+          "1. Phase 1 detects virtualization issues",
+          "2. Phase 3 runs automatically",
+          "3. Each fix is attempted in order",
+          "4. If a fix fails, it's logged and skipped",
+          "5. User is shown a summary of fixes applied",
+          "6. Restart is prompted if needed",
+        ],
+      },
+
+      h2("Manual vs Automatic"),
+      {
+        type: "table",
+        headers: ["Issue", "Manual Fix", "Auto Fix"],
+        rows: [
+          ["Hyper-V disabled", "dism /online /enable-feature", "Yes"],
+          ["Problematic KB", "wusa /uninstall /kb:XXXXXX", "Yes"],
+          ["WSL2 misconfigured", "wsl --update", "Yes"],
+          ["Defender blocking", "Add-MpPreference", "Yes"],
+          ["VBS enabled", "bcdedit /set", "Yes"],
+          ["FsDepends issue", "dism /online /enable-feature", "Yes"],
+        ],
+      },
+
+      h2("Troubleshooting"),
+      {
+        type: "h3",
+        text: "Bypass Didn't Work",
+      },
+      {
+        type: "list",
+        items: [
+          "Check wsa_activity.log for detailed error messages",
+          "Try running the fix manually",
+          "Check if BIOS virtualization is enabled",
+          "Verify Secure Boot settings",
+        ],
+      },
+      {
+        type: "h3",
+        text: "System Won't Start After Bypass",
+      },
+      {
+        type: "list",
+        items: [
+          "Boot into Safe Mode",
+          "Re-enable VBS: bcdedit /set hypervisorlaunchtype auto",
+          "Restart normally",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "win10-win11-detection-smart-build",
+    title: "Win10/Win11 Detection: How WSA Installer Selects the Right Build",
+    date: "2026-08-19",
+    excerpt:
+      "Smart detection that ensures Windows 10 users get WSAPatch builds while Windows 11 users get standard builds.",
+    tags: ["wsa-installer", "windows-10", "windows-11", "wsapatch", "detection"],
+    readTime: "6 min read",
+    gradient: GRAD[6],
+    series: {
+      name: "WSA Installer v1.2 Deep Dive",
+      part: 5,
+      total: 5,
+      posts: [
+        { slug: "wsa-pacman-double-click-apk-install", title: "WSA Pacman: Double-Click APK Install" },
+        { slug: "apk-file-handler-explorer-integration", title: "APK File Handler: Explorer Integration" },
+        { slug: "three-phase-system-check-explained", title: "3-Phase System Check Explained" },
+        { slug: "virtualization-bypass-auto-fix", title: "Virtualization Bypass: Auto-Fix" },
+        { slug: "win10-win11-detection-smart-build", title: "Win10/Win11 Detection" },
+      ],
+    },
+    body: [
+      h2("The Problem"),
+      {
+        type: "p",
+        text: "WSA was built for Windows 11. On Windows 10, it crashes because WsaClient.exe calls APIs that don't exist on the older OS. Different builds are needed for each Windows version.",
+      },
+
+      h2("How Detection Works"),
+      {
+        type: "p",
+        text: "WSA Installer uses Windows build numbers to determine your OS version:",
+      },
+      {
+        type: "code",
+        lang: "python",
+        code: "import sys\n\nversion = sys.getwindowsversion()\nif version.major == 10:\n    if version.build >= 22000:\n        # Windows 11 (build 22000+)\n        is_win11 = True\n    else:\n        # Windows 10 (build 19041-21999)\n        is_win11 = False\nelse:\n    # Unknown Windows version\n    is_win11 = False",
+      },
+
+      h2("Windows 11 Path"),
+      {
+        type: "h3",
+        text: "Standard WSA Builds",
+      },
+      {
+        type: "p",
+        text: "Windows 11 users get the standard WSA builds directly from Microsoft/WSABuilds:",
+      },
+      {
+        type: "list",
+        items: [
+          "Build: 2407.40000.4.0 (latest)",
+          "No additional patches required",
+          "Full GPU acceleration support",
+          "All features work out of the box",
+        ],
+      },
+      {
+        type: "h3",
+        text: "GitHub Source",
+      },
+      {
+        type: "code",
+        lang: "text",
+        code: "Source: WSA-Installer/wsa-installer\nBuild: 2407.40000.4.0\nArchitecture: x64\nGApps: MindTheGapps 13.0",
+      },
+
+      h2("Windows 10 Path"),
+      {
+        type: "h3",
+        text: "WSAPatch Builds",
+      },
+      {
+        type: "p",
+        text: "Windows 10 users get WSAPatch-compatible builds with binary patches:",
+      },
+      {
+        type: "list",
+        items: [
+          "Build: 2407.40000.4.0 (patched)",
+          "WsaClient.exe binary patched for Win10",
+          "API calls replaced with compatible equivalents",
+          "Some graphics limitations (ANGLE fallback)",
+        ],
+      },
+      {
+        type: "h3",
+        text: "What WSAPatch Does",
+      },
+      {
+        type: "p",
+        text: "WSAPatch modifies WsaClient.exe to replace unsupported API calls:",
+      },
+      {
+        type: "code",
+        lang: "text",
+        code: "Original (Win11):\n  CreateSymbolicLinkW → CreateSymbolicLinkW\n  GetProductInfo → GetProductInfo\n\nPatched (Win10):\n  CreateSymbolicLinkW → CreateSymbolicLinkW (compat)\n  GetProductInfo → GetVersionExW (fallback)",
+      },
+      {
+        type: "callout",
+        tone: "tip",
+        text: "WSAPatch is applied automatically during installation. You don't need to do anything extra.",
+      },
+
+      h2("Detection in Practice"),
+      {
+        type: "p",
+        text: "Here's how the detection flows through the installer:",
+      },
+      {
+        type: "list",
+        items: [
+          "1. User runs installer",
+          "2. Phase 1: System Validation detects Windows version",
+          "3. If Win11 → Use standard builds",
+          "4. If Win10 → Use WSAPatch builds",
+          "5. Download appropriate build",
+          "6. If Win10 → Apply WSAPatch during installation",
+          "7. Complete installation",
+        ],
+      },
+
+      h2("Version Matrix"),
+      {
+        type: "table",
+        headers: ["OS", "Build", "WSA Build", "Patches Required"],
+        rows: [
+          ["Windows 11 22H2+", "22000+", "2407.40000.4.0", "None"],
+          ["Windows 11 21H2", "22000", "2407.40000.4.0", "None"],
+          ["Windows 10 21H2", "19044", "2407.40000.4.0", "WSAPatch"],
+          ["Windows 10 21H1", "19043", "2407.40000.4.0", "WSAPatch"],
+          ["Windows 10 2004", "19041", "2407.40000.4.0", "WSAPatch"],
+          ["Windows 10 < 19041", "< 19041", "Not supported", "N/A"],
+        ],
+      },
+
+      h2("Troubleshooting"),
+      {
+        type: "h3",
+        text: "Wrong Build Selected",
+      },
+      {
+        type: "list",
+        items: [
+          "Check Windows version: winver",
+          "Verify build number in System Properties",
+          "Report issue on GitHub",
+        ],
+      },
+      {
+        type: "h3",
+        text: "WSAPatch Failed",
+      },
+      {
+        type: "list",
+        items: [
+          "Check if WsaClient.exe exists",
+          "Verify file permissions",
+          "Try running installer as administrator",
+          "Check wsa_activity.log for errors",
+        ],
+      },
+
+      h2("Future Plans"),
+      {
+        type: "p",
+        text: "Future versions will add:",
+      },
+      {
+        type: "list",
+        items: [
+          "ARM64 Windows support (Snapdragon PCs)",
+          "Automatic WSAPatch updates",
+          "Build selection override (advanced users)",
+          "Multi-version support (install multiple WSA versions)",
+        ],
       },
     ],
   },
