@@ -62,7 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${outfit.variable} ${jetbrains.variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
-        <meta name="google-site-verification" content="FKnHC4MBMNiQnqv7zvBpivuhPoKXBGsqa5vMoEPNL1Q" />
+        <meta name="google-site-verification" content="xFg4oMM0B4PetVMD2vMCBDEF20GlcfyNS3Bz1pipsgk" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
