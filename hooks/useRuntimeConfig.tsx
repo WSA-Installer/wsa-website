@@ -85,7 +85,7 @@ export function useMonetizationConfig() {
   };
 }
 
-export function useDownloadUrls(): { installer: { url: string; size: string; label: string }; bundle: { url: string; size: string; label: string; sha256: string } } {
+export function useDownloadUrls(): { installer: { url: string; size: string; label: string }; bundle: { url: string; size: string; label: string; sha256: string }; bundleWin10: { url: string; size: string; label: string; sha256: string } } {
   const config = useConfig();
   return {
     installer: {
@@ -98,6 +98,12 @@ export function useDownloadUrls(): { installer: { url: string; size: string; lab
       size: config.downloads.bundle.size,
       label: config.downloads.bundle.label,
       sha256: config.downloads.bundle.sha256,
+    },
+    bundleWin10: {
+      url: config.downloads.bundleWin10.url,
+      size: config.downloads.bundleWin10.size,
+      label: config.downloads.bundleWin10.label,
+      sha256: config.downloads.bundleWin10.sha256,
     },
   };
 }
@@ -182,5 +188,35 @@ export function useNavigationAdConfig(): NavigationAdConfig {
     showEvery: n?.showEvery ?? 3,
     duration: n?.duration ?? 5,
     skipAfter: n?.skipAfter ?? 3,
+  };
+}
+
+export interface SponsorContentConfig {
+  enabled: boolean;
+  title: string;
+  description: string;
+  ctaText: string;
+  ctaUrl: string;
+  duration: number;
+  showVideo: boolean;
+  videoUrl: string;
+  showImages: boolean;
+  imageLinks: string[];
+}
+
+export function useSponsorContentConfig(): SponsorContentConfig {
+  const c = useConfig().sponsorContent;
+  const showVideo = c?.showVideo ?? false;
+  return {
+    enabled: c?.enabled ?? false,
+    title: c?.title ?? "Sponsored Content",
+    description: c?.description ?? "",
+    ctaText: c?.ctaText ?? "Learn More",
+    ctaUrl: c?.ctaUrl ?? "",
+    duration: c?.duration ?? 5,
+    showVideo,
+    videoUrl: c?.videoUrl ?? "",
+    showImages: showVideo ? false : (c?.showImages ?? false),
+    imageLinks: c?.imageLinks ?? [],
   };
 }
