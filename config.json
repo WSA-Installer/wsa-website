@@ -138,9 +138,9 @@
     { "q": "How does file sharing between Windows and WSA work?", "a": "WSA Installer includes a WebDAV-based file sharing system. It mounts the WSA filesystem as Windows drive letters (X:/ and R:/) via ADB, allowing you to browse, edit, and transfer files using Windows File Explorer." }
   ],
   "releases": [
-    { "version": "1.2.0.0", "date": "2026-08", "label": "Latest", "notes": ["WSA Pacman — double-click APK/XAPK/APKS/APKM to install", "APK File Handler — Windows Explorer integration with custom icons", "3-Phase System Check — system validation, bundle detection, virtualization bypass", "Virtualization Bypass — auto-fix Hyper-V, KB uninstall, WSL2, Defender, VBS, FsDepends", "Win10/Win11 detection with appropriate GitHub API source", "30-chunk parallel download with resume support", "WSAPatch improvements", "Updated WSA 2407.40000.4.0 support", "Enhanced ADB automation"] },
-    { "version": "1.1.0.0", "date": "2026-01", "label": "", "notes": ["Background service stability", "Play Store patcher SDK update", "Rust security gateway"] },
-    { "version": "1.0.0.0", "date": "2025-09", "label": "Initial", "notes": ["First public release", "5-step wizard", "Parallel chunked downloads", "Play Store integration"] }
+    { "version": "1.2.0.0", "date": "2026-08-19", "label": "Latest", "notes": ["WSA Pacman — double-click APK/XAPK/APKS/APKM to install", "APK File Handler — Windows Explorer integration with custom icons", "3-Phase System Check — system validation, bundle detection, virtualization bypass", "Virtualization Bypass — auto-fix Hyper-V, KB uninstall, WSL2, Defender, VBS, FsDepends", "Win10/Win11 detection with appropriate GitHub API source", "30-chunk parallel download with resume support", "WSAPatch improvements", "Updated WSA 2407.40000.4.0 support", "Enhanced ADB automation"] },
+    { "version": "1.1.0.0", "date": "2026-01-15", "label": "", "notes": ["Background service stability", "Play Store patcher SDK update", "Rust security gateway"] },
+    { "version": "1.0.0.0", "date": "2025-09-01", "label": "Initial", "notes": ["First public release", "5-step wizard", "Parallel chunked downloads", "Play Store integration"] }
   ],
   "heroStats": [
     { "icon": "Star", "value": "17.9K", "label": "GitHub Stars" },
