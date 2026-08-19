@@ -1111,6 +1111,133 @@ export const BLOG_POSTS: BlogPost[] = [
       },
     ],
   },
+
+  /* ============================ G. NEW FEATURES ============================ */
+  {
+    slug: "wsa-installer-v1-2-new-features",
+    title: "WSA Installer v1.2: WSA Pacman, APK Handler & Virtualization Bypass",
+    date: "2026-08-18",
+    excerpt:
+      "The biggest update yet — double-click APK installs, Windows Explorer integration, 3-phase system check, and automatic virtualization fixes.",
+    tags: ["wsa-installer", "new-features", "apk", "pacman", "virtualization"],
+    readTime: "8 min read",
+    gradient: GRAD[8],
+    body: [
+      h2("What's New in v1.2"),
+      {
+        type: "p",
+        text: "WSA Installer v1.2 is the biggest update since launch. It introduces WSA Pacman for double-click APK installation, an APK File Handler for Windows Explorer integration, a 3-phase system check, and automatic virtualization bypass for compatibility issues.",
+      },
+      h2("WSA Pacman — Double-Click APK Install"),
+      {
+        type: "p",
+        text: "WSA Pacman lets you install any APK, XAPK, APKS, or APKM file by simply double-clicking it in Windows Explorer. The tool automatically detects the file format, connects to WSA via ADB, and installs the app with a desktop shortcut.",
+      },
+      {
+        type: "list",
+        items: [
+          "Supports APK, XAPK, APKS, APKM, and AAB formats",
+          "Automatic ADB connection (15 attempts with retry)",
+          "Detects install, update, downgrade, and reinstall",
+          "Creates desktop shortcuts with watermarked icons",
+          "6-step progress dialog with real-time status",
+        ],
+      },
+      {
+        type: "callout",
+        tone: "tip",
+        text: "WSA Pacman is registered as the default handler for APK files during installation. You can also run it manually with: app.py --wsa-pacman <path>",
+      },
+      h2("APK File Handler — Explorer Integration"),
+      {
+        type: "p",
+        text: "WSA Installer registers itself as the Windows handler for APK files. This means APK files get custom icons in Explorer, and double-clicking them opens WSA Pacman automatically.",
+      },
+      {
+        type: "list",
+        items: [
+          "Registers ProgIDs for 5 APK formats",
+          "Sets open command: app.py --wsa-pacman \"%1\"",
+          "Registers ApkIconShlExt.dll for per-file icons",
+          "Auto-registers on normal app startup",
+        ],
+      },
+      h2("3-Phase System Check"),
+      {
+        type: "p",
+        text: "The installer now runs a comprehensive 3-phase system check before installation:",
+      },
+      {
+        type: "list",
+        items: [
+          "Phase 1: System Validation — Windows version, virtualization, features",
+          "Phase 2: Bundle Detection — Cache check, extraction, hash verification",
+          "Phase 3: Virtualization Bypass — Auto-fix compatibility issues",
+        ],
+      },
+      h2("Virtualization Bypass"),
+      {
+        type: "p",
+        text: "When virtualization issues are detected, the installer automatically applies fixes:",
+      },
+      {
+        type: "list",
+        items: [
+          "Hyper-V — Enables required features via DISM",
+          "Problematic KBs — Uninstalls conflicting updates",
+          "WSL2 — Configures compatibility settings",
+          "Defender — Adds exclusion for WSA directory",
+          "VBS — Disables Virtualization-Based Security if needed",
+          "FsDepends — Fixes filesystem dependency issues",
+        ],
+      },
+      {
+        type: "callout",
+        tone: "warning",
+        text: "Virtualization Bypass requires administrator privileges. The installer will prompt for elevation when needed.",
+      },
+      h2("Win10/Win11 Detection"),
+      {
+        type: "p",
+        text: "WSA Installer now detects your Windows version and uses the appropriate GitHub API source. Windows 10 users get WSAPatch-compatible builds, while Windows 11 users get the standard builds.",
+      },
+      h2("Updated Installation Flow"),
+      {
+        type: "p",
+        text: "The installation flow has been updated to include the new features:",
+      },
+      {
+        type: "list",
+        items: [
+          "1. System Check — 3-phase validation with virtualization bypass",
+          "2. Bundle Check — Cache detection and extraction",
+          "3. Install WSA — 6-phase installation with parallel downloads",
+          "4. Play Store — 7-phase GApps integration",
+          "5. Complete — Shortcuts, service registration, APK handler",
+        ],
+      },
+      {
+        type: "callout",
+        tone: "tip",
+        text: "The new installation flow is faster and more reliable than ever. Pre-checks catch issues before they become problems.",
+      },
+      h2("Updated CLI Arguments"),
+      {
+        type: "p",
+        text: "New command-line arguments have been added for the new features:",
+      },
+      {
+        type: "code",
+        lang: "cmd",
+        code: "app.py --wsa-pacman <path>     :: Install APK from path\napp.py --register-apk         :: Register APK handler\napp.py --unregister-apk       :: Unregister APK handler",
+      },
+      h2("What's Next"),
+      {
+        type: "p",
+        text: "With v1.2, WSA Installer becomes a complete Android app management platform on Windows. Future updates will add WSA version management, custom GApps selection, and more customization options.",
+      },
+    ],
+  },
 ];
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
