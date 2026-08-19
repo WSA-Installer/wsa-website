@@ -249,10 +249,10 @@
   },
   "sponsorContent": {
     "enabled": true,
-    "title": "Sponsored Content",
+    "title": "Sponsored Content Test Mode",
     "description": "This content is brought to you by our sponsor.",
     "ctaText": "Learn More",
-    "ctaUrl": "https://example.com",
+    "ctaUrl": "",
     "duration": 5,
     "showVideo": false,
     "videoUrl": "",
