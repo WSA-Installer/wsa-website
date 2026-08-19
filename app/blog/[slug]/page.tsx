@@ -17,8 +17,40 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
 
   const related = getRelatedPosts(post, 3);
 
+  // JSON-LD structured data for blog post
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    dateModified: post.date,
+    author: {
+      "@type": "Person",
+      name: post.author || "MR CYBER",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "WSA Installer",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://wsa-installer-website.vercel.app/images/logo-64.png",
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://wsa-installer-website.vercel.app/blog/${post.slug}`,
+    },
+    keywords: post.tags.join(", "),
+    wordCount: post.body.length * 100,
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <section className="py-10 md:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb */}
@@ -55,6 +87,11 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
                     #{t}
                   </span>
                 ))}
+              </div>
+
+              {/* Ad between tags and cover */}
+              <div className="mt-6">
+                <AdFrame slot="after-tags" format="banner" />
               </div>
 
               {/* Cover */}

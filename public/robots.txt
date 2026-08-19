@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gshellmr-code.github.io/wsa-installer-website/sitemap.xml
+Sitemap: https://wsa-installer-website.vercel.app/sitemap.xml

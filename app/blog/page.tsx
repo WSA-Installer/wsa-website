@@ -28,6 +28,11 @@ export default function BlogPage() {
 
           <TagFilter tags={tags} active={activeTag} onChange={setActiveTag} />
 
+          {/* Ad between tags and blog posts */}
+          <div className="my-6">
+            <AdFrame slot="after-tags" format="banner" />
+          </div>
+
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((post) => (
               <BlogCard key={post.slug} post={post} />
