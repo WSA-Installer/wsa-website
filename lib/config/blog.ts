@@ -1443,14 +1443,13 @@ export const BLOG_POSTS: BlogPost[] = [
 
       h2("Supported Formats"),
       {
-        type: "table",
-        headers: ["Format", "Extension", "Description"],
-        rows: [
-          ["APK", ".apk", "Standard Android application package"],
-          ["XAPK", ".xapk", "XAPK bundle (APK + OBB data files)"],
-          ["APKS", ".apks", "Split APKs bundle (Google Play App Bundle)"],
-          ["APKM", ".apkm", "APK Mirror bundle format"],
-          ["AAB", ".aab", "Android App Bundle (raw, not signed)"],
+        type: "list",
+        items: [
+          "APK (.apk) — Standard Android application package",
+          "XAPK (.xapk) — XAPK bundle (APK + OBB data files)",
+          "APKS (.apks) — Split APKs bundle (Google Play App Bundle)",
+          "APKM (.apkm) — APK Mirror bundle format",
+          "AAB (.aab) — Android App Bundle (raw, not signed)",
         ],
       },
 
@@ -2125,15 +2124,14 @@ export const BLOG_POSTS: BlogPost[] = [
 
       h2("Manual vs Automatic"),
       {
-        type: "table",
-        headers: ["Issue", "Manual Fix", "Auto Fix"],
-        rows: [
-          ["Hyper-V disabled", "dism /online /enable-feature", "Yes"],
-          ["Problematic KB", "wusa /uninstall /kb:XXXXXX", "Yes"],
-          ["WSL2 misconfigured", "wsl --update", "Yes"],
-          ["Defender blocking", "Add-MpPreference", "Yes"],
-          ["VBS enabled", "bcdedit /set", "Yes"],
-          ["FsDepends issue", "dism /online /enable-feature", "Yes"],
+        type: "list",
+        items: [
+          "Hyper-V disabled → dism /online /enable-feature → Auto: Yes",
+          "Problematic KB → wusa /uninstall /kb:XXXXXX → Auto: Yes",
+          "WSL2 misconfigured → wsl --update → Auto: Yes",
+          "Defender blocking → Add-MpPreference → Auto: Yes",
+          "VBS enabled → bcdedit /set → Auto: Yes",
+          "FsDepends issue → dism /online /enable-feature → Auto: Yes",
         ],
       },
 
@@ -2290,15 +2288,14 @@ export const BLOG_POSTS: BlogPost[] = [
 
       h2("Version Matrix"),
       {
-        type: "table",
-        headers: ["OS", "Build", "WSA Build", "Patches Required"],
-        rows: [
-          ["Windows 11 22H2+", "22000+", "2407.40000.4.0", "None"],
-          ["Windows 11 21H2", "22000", "2407.40000.4.0", "None"],
-          ["Windows 10 21H2", "19044", "2407.40000.4.0", "WSAPatch"],
-          ["Windows 10 21H1", "19043", "2407.40000.4.0", "WSAPatch"],
-          ["Windows 10 2004", "19041", "2407.40000.4.0", "WSAPatch"],
-          ["Windows 10 < 19041", "< 19041", "Not supported", "N/A"],
+        type: "list",
+        items: [
+          "Windows 11 22H2+ (build 22000+) → WSA 2407.40000.4.0 → No patches",
+          "Windows 11 21H2 (build 22000) → WSA 2407.40000.4.0 → No patches",
+          "Windows 10 21H2 (build 19044) → WSA 2407.40000.4.0 → WSAPatch",
+          "Windows 10 21H1 (build 19043) → WSA 2407.40000.4.0 → WSAPatch",
+          "Windows 10 2004 (build 19041) → WSA 2407.40000.4.0 → WSAPatch",
+          "Windows 10 < 19041 → Not supported",
         ],
       },
 
