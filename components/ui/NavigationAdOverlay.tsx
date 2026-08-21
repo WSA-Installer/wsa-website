@@ -12,6 +12,9 @@ interface NavigationAdOverlayProps {
 
 export default function NavigationAdOverlay({ visible, onAccept }: NavigationAdOverlayProps) {
   const config = useSponsorContentConfig();
+  if (typeof window !== "undefined") {
+    console.log("[SponsorConfig]", { title: config.title, ctaText: config.ctaText, showImages: config.showImages, imageLinks: config.imageLinks.length });
+  }
   const [countdown, setCountdown] = useState(config.duration);
   const canContinue = countdown <= 0;
   const [imageIndex, setImageIndex] = useState(0);
